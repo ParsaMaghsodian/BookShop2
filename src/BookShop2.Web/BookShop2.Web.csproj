@@ -20,4 +20,8 @@
     <ProjectReference Include="..\BookShop2\BookShop2.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Pages\Books\" />
+  </ItemGroup>
+
 </Project>

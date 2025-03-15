@@ -1,0 +1,46 @@
+﻿@* Sidebar.cshtml *@
+<div class="sidebar">
+    <h2>Admin pannel</h2>
+    <ul>
+        <li><a href="~/Home">Home</a></li>
+        <li><a href="/About">About</a></li>
+        <li><a href="/Services">Services</a></li>
+        <li><a href="/Contact">Contact</a></li>
+    </ul>
+</div>
+
+<style>
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        background-color: #f4f4f4;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        position: fixed; /* Fixed sidebar */
+    }
+
+        .sidebar h2 {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            .sidebar ul li {
+                margin: 15px 0;
+            }
+
+                .sidebar ul li a {
+                    text-decoration: none;
+                    color: #333;
+                    font-family: Arial, sans-serif;
+                }
+
+                    .sidebar ul li a:hover {
+                        color: #007BFF; /* Change color on hover */
+                    }
+</style>
