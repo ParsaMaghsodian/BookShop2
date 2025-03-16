@@ -1,6 +1,7 @@
-using BookShop2.Web.Data;
+using BookShop2.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
