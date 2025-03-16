@@ -1,0 +1,51 @@
+﻿@page
+@model BookShop2.Web.Areas.Admin.Pages.Books.CreateModel
+
+@{
+    ViewData["Title"] = "Create Book";
+}
+
+<div class="container mt-5">
+    <h2 class="text-primary">Create a New Book</h2>
+    <form asp-action="Create" method="post" class="mt-4">
+        <div class="mb-3">
+            <label asp-for="Book.Name" class="form-label">Name</label>
+            <input asp-for="Book.Name" class="form-control" />
+            <span asp-validation-for="Book.Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Book.Description" class="form-label">Description</label>
+            <textarea asp-for="Book.Description" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Book.Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Book.Author" class="form-label">Author</label>
+            <input asp-for="Book.Author" class="form-control" />
+            <span asp-validation-for="Book.Author" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Book.Date" class="form-label">Date</label>
+            <input asp-for="Book.Date" class="form-control" type="date" />
+            <span asp-validation-for="Book.Date" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Book.Price" class="form-label">Price</label>
+            <input asp-for="Book.Price" class="form-control" type="number" min="0" />
+            <span asp-validation-for="Book.Price" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Book.Pages" class="form-label">Pages</label>
+            <input asp-for="Book.Pages" class="form-control" type="number" min="1" />
+            <span asp-validation-for="Book.Pages" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Book</button>
+        <a asp-page="/Books/Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
