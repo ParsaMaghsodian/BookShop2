@@ -12,4 +12,5 @@ public interface IBookService
 {
     IList<BookItem> GetAllBooks();
     void AddBook(BookCreateModel item);
+    BookDetails GetBookDetails(int id);
 }

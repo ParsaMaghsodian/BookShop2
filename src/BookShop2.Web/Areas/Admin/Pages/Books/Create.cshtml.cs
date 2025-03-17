@@ -23,21 +23,47 @@ public class CreateModel : PageModel
     }
     public IActionResult OnPost()
     {
+        // Validate the Date
         if (Book.Date > DateTime.Now || Book.Date.Year < 1990)
         {
             ModelState.AddModelError("Book.Date", $"The Date must be between {DateTime.Now.Year} and 1990!");  // Pass the key "" if you want ModelOnly Erorr
+        }
+        // 1MB limit in uploading 
+        if (Book.CoverImage != null && Book.CoverImage.Length > 1_000_000) 
+        {
+            ModelState.AddModelError("Book.CoverImage", "Cover image must not exceed 1 MB.");
         }
         if (!ModelState.IsValid)
         {
             return Page();
         }
-        _bookService.AddBook(Book.Adapt<BookCreateModel>()); // Pass the info from our ViewModel to our DTO which is BookCreateModel
+
+        // Process CoverImage only if it's not null
+        if (Book.CoverImage!=null)
+        {
+            using MemoryStream ms = new MemoryStream();
+            Book.CoverImage.CopyTo(ms);
+            ms.Position = 0;
+            Book.CoverImageData = ms.ToArray();
+        }
+        
+
+        _bookService.AddBook(new BookCreateModel   // Pass the info from our ViewModel to our DTO which is BookCreateModel
+        {
+            CoverImage = Book.CoverImageData, // Pass null if no image is provided
+            Name = Book.Name,
+            Description = Book.Description,
+            Author = Book.Author,
+            Date = Book.Date,
+            Price = Book.Price,
+            Pages = Book.Pages
+        }); 
         return RedirectToPage("./Index");
     }
 }
 
- // This class is just a ViewModel for validations
-public class BookCreateViewModel 
+// This class is just a ViewModel for validations
+public class BookCreateViewModel
 {
     [StringLength(40, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 2)]
     [Required]
@@ -49,5 +75,6 @@ public class BookCreateViewModel
     public int Price { get; set; }
     [Range(0, 10000, ErrorMessage = "Pages must be between {1} and {2}")]
     public int Pages { get; set; }
-
+    public IFormFile? CoverImage { get; set; }
+    public byte[]? CoverImageData { get; set; } = null;
 }

@@ -41,4 +41,10 @@ public class BookService : IBookService
          // Automated Projection By Mapster
         return _db.Books.ProjectToType<BookItem>().ToList();
     }
+
+    public BookDetails GetBookDetails(int id)
+    {
+       return _db.Books.ProjectToType<BookDetails>().First(x=>x.Id==id);
+ 
+    }
 }

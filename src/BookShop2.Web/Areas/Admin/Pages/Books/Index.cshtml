@@ -11,13 +11,10 @@
     <table class="table table-bordered table-striped mt-3 ">
         <thead class="table-primary">
             <tr>
-                <th>#</th>
+               
                 <th>Name</th>
                 <th>Author</th>
-                <th>Description</th>
                 <th>Price</th>
-                <th>Pages</th>
-                <th>Date</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -27,16 +24,12 @@
                 foreach (var book in Model.BookList)
                 {
                     <tr>
-                        <td>@book.Id</td>
                         <td>@book.Name</td>
                         <td>@book.Author</td>
-                        <td>@book.Description</td>
-                        <td>@book.Price</td>
-                        <td>@book.Pages</td>
-                        <td>@book.Date.ToString("yyyy-MM-dd")</td>
+                        <td>$@book.Price</td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@book.Id" class="btn btn-warning btn-sm">Edit</a>
-                            <a asp-action="Details" asp-route-id="@book.Id" class="btn btn-info btn-sm">Details</a>
+                            <a asp-page="./BookDetails" asp-route-id="@book.Id" class="btn btn-info btn-sm">Details</a>
                             <a asp-action="Delete" asp-route-id="@book.Id" class="btn btn-danger btn-sm">Delete</a>
                         </td>
                     </tr>
