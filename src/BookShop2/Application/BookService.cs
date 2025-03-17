@@ -1,0 +1,44 @@
+﻿using BookShop2.Application.DTO;
+using BookShop2.Infrastructure;
+using BookShop2.Infrastructure.DataModels;
+using Mapster;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BookShop2.Application;
+
+public class BookService : IBookService
+{
+    private readonly ApplicationDbContext _db;
+    public BookService(ApplicationDbContext db)
+    {
+        _db = db;
+    }
+
+    public void AddBook(BookCreateModel item)
+    {
+        _db.Books.Add(item.Adapt<BookData>()); // pass the info from our DTO to our DataModels which is BookData
+        _db.SaveChanges();
+    }
+
+    public IList<BookItem> GetAllBooks()
+    {
+        // Manual projection
+        //return _db.Books?.Select(x => new BookItem
+        //{
+        //    Id = x.Id,
+        //    Name = x.Name,
+        //    Description = x.Description,
+        //    Pages = x.Pages,
+        //    Price = x.Price,
+        //    Author = x.Author,
+        //    Date = x.Date,
+        //}).ToList() ?? new List<BookItem>();
+
+         // Automated Projection By Mapster
+        return _db.Books.ProjectToType<BookItem>().ToList();
+    }
+}
