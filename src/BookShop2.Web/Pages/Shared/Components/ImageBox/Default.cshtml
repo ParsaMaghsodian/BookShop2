@@ -1,0 +1,14 @@
+﻿@model BookShop2.Web.ViewComponents.ImageBoxViewModel
+
+@if (!string.IsNullOrEmpty(Model.ImageBase64))
+{
+    <img src="data:image/png;base64,@Model.ImageBase64"
+         alt="@Model.Alt"
+         class="@Model.Class"
+         style="@Model.Style" />
+}
+else
+{
+    <p class="text-muted">No image available</p>
+}
+

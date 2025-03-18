@@ -4,23 +4,16 @@
     ViewData["Title"] = "BookDetails";
 }
 
-
 <div class="container mt-5">
     <h2 class="text-primary mb-4">@Model.Details.Name</h2>
-@if (Model.Details.CoverImage != null)
-{
+
     <div class="text-center mb-4">
-        <img src="data:image/png;base64,@Convert.ToBase64String(Model.Details.CoverImage)"
-             alt="Cover Image"
-             class="img-fluid rounded shadow"
-             style="max-height: 400px; object-fit: cover;" />
+        <vc:Image-Box contents="Model.Details.CoverImage"
+                      style="max-height: 400px; object-fit: cover;"
+                      alt="Cover Image"
+                      classboot="img-fluid rounded shadow" />
     </div>
 
-}
-else
-{
-    <p>No cover image available.</p>
-}
     <p><strong>Author:</strong> @Model.Details.Author</p>
     <p><strong>Description:</strong> @Model.Details.Description</p>
     <p><strong>Published Date:</strong> @Model.Details.Date.ToShortDateString()</p>
