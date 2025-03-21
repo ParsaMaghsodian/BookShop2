@@ -44,6 +44,19 @@ public class BookService : IBookService
 
     public BookDetails GetBookDetails(int id)
     {
-           return _db.Books.ProjectToType<BookDetails>().First(x=>x.Id==id);
+        return _db.Books.ProjectToType<BookDetails>().First(x => x.Id == id);
+    }
+
+    public BookEditModel GetEdit(int id)
+    {
+
+        return _db.Books.ProjectToType<BookEditModel>().First(x => x.Id == id);
+    }
+
+    public void Update(BookEditModel book)
+    {
+         _db.Books.Update(book.Adapt<BookData>());
+         _db.SaveChanges();
+
     }
 }
