@@ -11,12 +11,14 @@
         <vc:Image-Box contents="Model.Details.CoverImage"
                       style="max-height: 400px; object-fit: cover;"
                       alt="Cover Image"
-                      classboot="img-fluid rounded shadow" />
+                      classboot="img-fluid rounded shadow" >
+        </vc:Image-Box>
     </div>
 
     <p><strong>Author:</strong> @Model.Details.Author</p>
     <p><strong>Description:</strong> @Model.Details.Description</p>
     <p><strong>Published Date:</strong> @Model.Details.Date.ToShortDateString()</p>
+    <p><strong>LanguageType:</strong> @Model.Details.Language</p>
     <p><strong>Price:</strong> $@Model.Details.Price</p>
     <p><strong>Pages:</strong> @Model.Details.Pages</p>
     <div class="mt-4">

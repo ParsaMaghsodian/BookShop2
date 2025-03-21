@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookShop2.Infrastructure.DataModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,4 +17,5 @@ public class BookCreateModel
     public int Price { get; init; }
     public int Pages { get; init; }
     public byte[]? CoverImage { get; init; }
+    public Language  Language { get; init; }
 }

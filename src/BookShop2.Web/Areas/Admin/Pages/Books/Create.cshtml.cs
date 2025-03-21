@@ -29,7 +29,7 @@ public class CreateModel : PageModel
             ModelState.AddModelError("Book.Date", $"The Date must be between {DateTime.Now.Year} and 1990!");  // Pass the key "" if you want ModelOnly Erorr
         }
         // 1MB limit in uploading 
-        if (Book.CoverImage != null && Book.CoverImage.Length > 1_000_000) 
+        if (Book.CoverImage != null && Book.CoverImage.Length > 1_000_000)
         {
             ModelState.AddModelError("Book.CoverImage", "Cover image must not exceed 1 MB.");
         }
@@ -39,14 +39,14 @@ public class CreateModel : PageModel
         }
 
         // Process CoverImage only if it's not null
-        if (Book.CoverImage!=null)
+        if (Book.CoverImage != null)
         {
             using MemoryStream ms = new MemoryStream();
             Book.CoverImage.CopyTo(ms);
             ms.Position = 0;
             Book.CoverImageData = ms.ToArray();
         }
-        
+
 
         _bookService.AddBook(new BookCreateModel   // Pass the info from our ViewModel to our DTO which is BookCreateModel
         {
@@ -56,8 +56,9 @@ public class CreateModel : PageModel
             Author = Book.Author,
             Date = Book.Date,
             Price = Book.Price,
-            Pages = Book.Pages
-        }); 
+            Pages = Book.Pages,
+            Language = Book.Language
+        });
         return RedirectToPage("./Index");
     }
 }
@@ -65,7 +66,7 @@ public class CreateModel : PageModel
 // This class is just a ViewModel for validations
 public class BookCreateViewModel
 {
-    [StringLength(40, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 2)]
+    [StringLength(40, ErrorMessage = "length must be between {2} and {1}.", MinimumLength = 2)]
     [Required]
     public string Name { get; set; }
     public string? Description { get; set; }
@@ -77,4 +78,6 @@ public class BookCreateViewModel
     public int Pages { get; set; }
     public IFormFile? CoverImage { get; set; }
     public byte[]? CoverImageData { get; set; } = null;
+    [Required(ErrorMessage = "Please Select a Language")]
+    public Language  Language { get; set; }
 }

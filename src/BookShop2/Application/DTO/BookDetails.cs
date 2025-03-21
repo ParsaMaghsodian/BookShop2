@@ -16,4 +16,5 @@ public class BookDetails
     public int Price { get; init; }
     public int Pages { get; init; }
     public byte[]? CoverImage { get; init; }
+    public string Language { get; init; }
 }

@@ -38,13 +38,12 @@ public class BookService : IBookService
         //    Date = x.Date,
         //}).ToList() ?? new List<BookItem>();
 
-         // Automated Projection By Mapster
+        // Automated Projection By Mapster
         return _db.Books.ProjectToType<BookItem>().ToList();
     }
 
     public BookDetails GetBookDetails(int id)
     {
-       return _db.Books.ProjectToType<BookDetails>().First(x=>x.Id==id);
- 
+           return _db.Books.ProjectToType<BookDetails>().First(x=>x.Id==id);
     }
 }
