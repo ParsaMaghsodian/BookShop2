@@ -4,6 +4,7 @@ using BookShop2.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookShop2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250317154025_AddingImageByteToBookstbl")]
+    partial class AddingImageByteToBookstbl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,6 +38,7 @@ namespace BookShop2.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<byte[]>("CoverImage")
+                        .HasMaxLength(1000000)
                         .HasColumnType("varbinary(max)");
 
                     b.Property<DateTime>("Date")
@@ -43,9 +47,6 @@ namespace BookShop2.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
-
-                    b.Property<int>("Language")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -74,7 +75,6 @@ namespace BookShop2.Migrations
                             Author = "Andrew Lock",
                             Date = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Build professional-grade full-stack web applications using C# and ASP.NET Core. In ASP.NET Core in Action, Third Edition",
-                            Language = 0,
                             Name = "ASP.NET Core in Action",
                             Pages = 984,
                             Price = 50
@@ -85,7 +85,6 @@ namespace BookShop2.Migrations
                             Author = "Adam Freeman",
                             Date = new DateTime(2023, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Now in its tenth edition, this industry-leading guide to ASP.NET Core teaches everything you need to know to create easy, extensible, and cloud-native web applications",
-                            Language = 0,
                             Name = "Pro ASP.NET Core 7",
                             Pages = 1256,
                             Price = 65

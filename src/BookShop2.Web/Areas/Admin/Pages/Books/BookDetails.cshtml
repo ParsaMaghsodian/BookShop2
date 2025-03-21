@@ -1,0 +1,29 @@
+﻿@page
+@model BookShop2.Web.Areas.Admin.Pages.Books.BookDetailsModel
+@{
+    ViewData["Title"] = "BookDetails";
+}
+
+<div class="container mt-5">
+    <h2 class="text-primary mb-4">@Model.Details.Name</h2>
+
+    <div class="text-center mb-4">
+        <vc:Image-Box contents="Model.Details.CoverImage"
+                      style="max-height: 400px; object-fit: cover;"
+                      alt="Cover Image"
+                      classboot="img-fluid rounded shadow" >
+        </vc:Image-Box>
+    </div>
+
+    <p><strong>Author:</strong> @Model.Details.Author</p>
+    <p><strong>Description:</strong> @Model.Details.Description</p>
+    <p><strong>Published Date:</strong> @Model.Details.Date.ToShortDateString()</p>
+    <p><strong>LanguageType:</strong> @Model.Details.Language</p>
+    <p><strong>Price:</strong> $@Model.Details.Price</p>
+    <p><strong>Pages:</strong> @Model.Details.Pages</p>
+    <div class="mt-4">
+        <a asp-page="/Books/Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Back to List
+        </a>
+    </div>
+</div>

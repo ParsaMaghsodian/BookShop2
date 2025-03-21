@@ -10,10 +10,12 @@ namespace BookShop2.Infrastructure.DataModels;
 public class BookData
 {
     public int Id { get; set; }
-    public string Name { get; set; }
-    public string  ? Description { get; set; }
-    public string ? Author { get; set; }
+    public  required string Name { get; set; }
+    public string? Description { get; set; }
+    public string? Author { get; set; }
     public DateTime Date { get; set; }
     public int Price { get; set; }
     public int Pages { get; set; }
+    public byte[]? CoverImage { get; set; }
+    public Language  Language { get; set; }
 }

@@ -7,8 +7,13 @@
 
 <div class="container mt-5">
     <h2 class="text-primary">Create a New Book</h2>
-    <form method="post" class="mt-4">
+    <form method="post" class="mt-4" enctype="multipart/form-data">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="Book.CoverImage" class="form-label">Image</label>
+            <input asp-for="Book.CoverImage" class="form-control" />
+            <span asp-validation-for="Book.CoverImage" class="text-danger"></span>
+        </div>
         <div class="mb-3">
             <label asp-for="Book.Name" class="form-label">Name</label>
             <input asp-for="Book.Name" class="form-control" />
@@ -31,6 +36,13 @@
             <label asp-for="Book.Date" class="form-label">Date</label>
             <input asp-for="Book.Date" class="form-control" type="date" />
             <span asp-validation-for="Book.Date" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Book.Language" class="form-label">Language</label>
+            <select asp-for="Book.Language" asp-items="@Html.GetEnumSelectList<BookShop2.Infrastructure.DataModels.Language>()" class="form-control">
+                <option value="" disabled selected>Select a Language</option>
+            </select>
+            <span asp-validation-for="Book.Language" class="text-danger"></span>
         </div>
 
         <div class="mb-3">

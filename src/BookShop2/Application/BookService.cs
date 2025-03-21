@@ -38,7 +38,25 @@ public class BookService : IBookService
         //    Date = x.Date,
         //}).ToList() ?? new List<BookItem>();
 
-         // Automated Projection By Mapster
+        // Automated Projection By Mapster
         return _db.Books.ProjectToType<BookItem>().ToList();
+    }
+
+    public BookDetails GetBookDetails(int id)
+    {
+        return _db.Books.ProjectToType<BookDetails>().First(x => x.Id == id);
+    }
+
+    public BookEditModel GetEdit(int id)
+    {
+
+        return _db.Books.ProjectToType<BookEditModel>().First(x => x.Id == id);
+    }
+
+    public void Update(BookEditModel book)
+    {
+         _db.Books.Update(book.Adapt<BookData>());
+         _db.SaveChanges();
+
     }
 }
