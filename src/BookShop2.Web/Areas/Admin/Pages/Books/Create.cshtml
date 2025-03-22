@@ -44,6 +44,13 @@
             </select>
             <span asp-validation-for="Book.Language" class="text-danger"></span>
         </div>
+        <div class="mb-3">
+            <label asp-for="Book.CategoryId" class="form-label">Category</label>
+            <select asp-for="Book.CategoryId" asp-items="@Model.SelectListCategory" class="form-control">
+                <option value="" disabled selected>Select a Category</option>
+            </select>
+            <span asp-validation-for="Book.CategoryId" class="text-danger"></span>
+        </div>
 
         <div class="mb-3">
             <label asp-for="Book.Price" class="form-label">Price</label>

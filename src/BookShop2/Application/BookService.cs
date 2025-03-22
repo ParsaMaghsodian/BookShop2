@@ -2,6 +2,7 @@
 using BookShop2.Infrastructure;
 using BookShop2.Infrastructure.DataModels;
 using Mapster;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,12 @@ public class BookService : IBookService
         //}).ToList() ?? new List<BookItem>();
 
         // Automated Projection By Mapster
-        return _db.Books.ProjectToType<BookItem>().ToList();
+        return _db.Books.Include(c => c.BookCategory).ProjectToType<BookItem>().ToList();
+    }
+
+    public ICollection<BookCategory> GetAllCategories()
+    {
+        return _db.Categories.ToList();
     }
 
     public BookDetails GetBookDetails(int id)
@@ -55,8 +61,8 @@ public class BookService : IBookService
 
     public void Update(BookEditModel book)
     {
-         _db.Books.Update(book.Adapt<BookData>());
-         _db.SaveChanges();
+        _db.Books.Update(book.Adapt<BookData>());
+        _db.SaveChanges();
 
     }
 }

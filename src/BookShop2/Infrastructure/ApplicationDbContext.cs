@@ -15,31 +15,34 @@ public class ApplicationDbContext : IdentityDbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         // Seeding
-        builder.Entity<BookData>().HasData(
-            new BookData
+        builder.Entity<BookCategory>().HasData(
+            new BookCategory
             {
                 Id = 1,
-                Name = "ASP.NET Core in Action",
-                Description = "Build professional-grade full-stack web applications using C# and ASP.NET Core. In ASP.NET Core in Action, Third Edition",
-                Author = "Andrew Lock",
-                Date = new DateTime(2023, 10, 01),
-                Pages = 984,
-                Price = 50
+                Name = "Technical"
             },
-            new BookData
+            new BookCategory
             {
                 Id = 2,
-                Name = "Pro ASP.NET Core 7",
-                Description = "Now in its tenth edition, this industry-leading guide to ASP.NET Core teaches everything you need to know to create easy, extensible, and cloud-native web applications",
-                Author = "Adam Freeman",
-                Date = new DateTime(2023, 11, 01),
-                Pages = 1256,
-                Price = 65
-            });
+                Name = "Fiction"
+            },
+            new BookCategory
+            {
+                Id = 3,
+                Name = "Children"
+            },
+            new BookCategory
+            {
+                Id = 4,
+                Name = "Novel"
+            }
+            );
         builder.ApplyConfiguration(new BookDataConfiguration());
+        builder.ApplyConfiguration(new BookCategoryConfiguration());
         base.OnModelCreating(builder);
     }
 
     public DbSet<BookData> Books { get; set; }
+    public DbSet<BookCategory> Categories { get; set; }
 
 }

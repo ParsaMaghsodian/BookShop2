@@ -4,6 +4,7 @@ using BookShop2.Infrastructure.DataModels;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace BookShop2.Web.Areas.Admin.Pages.Books;
@@ -12,14 +13,18 @@ public class EditModel : PageModel
 {
     [BindProperty]
     public BookEditViewModel BookEdit { get; set; }
+    public SelectList SelectListCategory { get; set; }
     private readonly IBookService _bookService;
     public EditModel(IBookService bookService)
     {
         _bookService = bookService;
     }
     public void OnGet(int id)
-    {
+    { 
+        var categories = _bookService.GetAllCategories();
+        SelectListCategory = new SelectList(categories,"Id","Name");
         BookEdit = _bookService.GetEdit(id).Adapt<BookEditViewModel>();
+
     }
     public IActionResult OnPost()
     {
@@ -63,5 +68,7 @@ public class BookEditViewModel
     public IFormFile? CoverImageUpload { get; set; }
     [Required(ErrorMessage = "Please Select a Language")]
     public Language Language { get; set; }
+    [Required(ErrorMessage = "Please Select a Category")]
+    public int CategoryId { get; set; }
 
 }
