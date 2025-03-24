@@ -39,7 +39,7 @@
         </div>
         <div class="mb-3">
             <label asp-for="Book.Language" class="form-label">Language</label>
-            <select asp-for="Book.Language" asp-items="@Html.GetEnumSelectList<BookShop2.Infrastructure.DataModels.Language>()" class="form-control">
+            <select asp-for="Book.Language" asp-items="@(Html.GetEnumSelectList<BookShop2.Infrastructure.DataModels.Language>())" class="form-control">
                 <option value="" disabled selected>Select a Language</option>
             </select>
             <span asp-validation-for="Book.Language" class="text-danger"></span>

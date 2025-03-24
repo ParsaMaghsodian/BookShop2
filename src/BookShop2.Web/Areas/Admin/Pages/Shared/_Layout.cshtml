@@ -16,6 +16,31 @@
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Add a shadow for aesthetics */
         }
 
+            .sidebar h2 {
+                text-align: center;
+                font-family: Arial, sans-serif;
+            }
+
+            .sidebar ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+
+                .sidebar ul li {
+                    margin: 15px 0;
+                }
+
+                    .sidebar ul li a {
+                        text-decoration: none;
+                        color: #333;
+                        font-family: Arial, sans-serif;
+                    }
+
+                        .sidebar ul li a:hover {
+                            color: #007BFF; /* Change color on hover */
+                        }
+
         .content {
             margin-left: 250px; /* Ensure main content starts after the sidebar */
             padding: 20px; /* Add some padding for spacing */
@@ -24,7 +49,6 @@
 }
 
 <partial name="_Sidebar" />
-
 <div class="content">
     @RenderBody()
 </div>
