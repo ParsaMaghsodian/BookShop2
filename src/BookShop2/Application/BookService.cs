@@ -59,6 +59,21 @@ public class BookService : IBookService
         return _db.Books.ProjectToType<BookEditModel>().First(x => x.Id == id);
     }
 
+    public BookRemoveModel GetRemove(int id)
+    {
+        return _db.Books.ProjectToType<BookRemoveModel>().First(b => b.Id == id);
+    }
+
+    public void RemoveBook(int id)
+    {
+        var book = _db.Books.Find(id);
+        if (book != null)
+        {
+            _db.Books.Remove(book);
+            _db.SaveChanges();
+        }
+    }
+
     public void Update(BookEditModel book)
     {
         _db.Books.Update(book.Adapt<BookData>());

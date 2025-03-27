@@ -1,0 +1,37 @@
+﻿@page
+@model BookShop2.Web.Areas.Admin.Pages.Books.DeleteModel
+@{
+    ViewData["Title"] = "DeleteBook";
+}
+<div class="container mt-5">
+    <h2 class="text-danger">Remove Book</h2>
+
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="Book.Name" class="form-label">Name:</label>
+            <input asp-for="Book.Name" class="form-control" disabled />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Book.Price" class="form-label">Price:</label>
+            <input asp-for="Book.Price" class="form-control" disabled />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Book.CoverImage" class="form-label">Cover Image:</label>
+            <vc:Image-Box contents="Model.Book.CoverImage"
+                          style="max-width: 200px;"
+                          alt="Cover Image"
+                          classboot="img-thumbnail">
+            </vc:Image-Box>
+        </div>
+
+        <input type="hidden" asp-for="Book.Id" />
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
