@@ -20,5 +20,6 @@ public class BookEditModel
     public byte[]? CoverImage { get; init; }
     public Language Language { get; init; }
 
+    public int CategoryId { get; set; }
 
 }

@@ -22,6 +22,46 @@ namespace BookShop2.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BookShop2.Infrastructure.DataModels.BookCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Technical"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Fiction"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Children"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Novel"
+                        });
+                });
+
             modelBuilder.Entity("BookShop2.Infrastructure.DataModels.BookData", b =>
                 {
                     b.Property<int>("Id")
@@ -33,6 +73,9 @@ namespace BookShop2.Migrations
                     b.Property<string>("Author")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("CoverImage")
                         .HasColumnType("varbinary(max)");
@@ -60,35 +103,13 @@ namespace BookShop2.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Books", null, t =>
                         {
                             t.HasCheckConstraint("CK_BookData_Pages", "[Pages] >=0 AND [Pages]<=10000");
 
                             t.HasCheckConstraint("CK_BookData_Price", "[Price] >=0 AND [Price]<=1000");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Author = "Andrew Lock",
-                            Date = new DateTime(2023, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Build professional-grade full-stack web applications using C# and ASP.NET Core. In ASP.NET Core in Action, Third Edition",
-                            Language = 0,
-                            Name = "ASP.NET Core in Action",
-                            Pages = 984,
-                            Price = 50
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Author = "Adam Freeman",
-                            Date = new DateTime(2023, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Now in its tenth edition, this industry-leading guide to ASP.NET Core teaches everything you need to know to create easy, extensible, and cloud-native web applications",
-                            Language = 0,
-                            Name = "Pro ASP.NET Core 7",
-                            Pages = 1256,
-                            Price = 65
                         });
                 });
 
@@ -292,6 +313,17 @@ namespace BookShop2.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("BookShop2.Infrastructure.DataModels.BookData", b =>
+                {
+                    b.HasOne("BookShop2.Infrastructure.DataModels.BookCategory", "BookCategory")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("BookCategory");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Pages/Shared/_LayoutUser.cshtml";
+}
+
+
+<div class="container-fluid" dir="rtl">
+    <div class="row">
+        <div class="col-sm-2 p-0 m-0">
+            <partial name="_Sidebar">
+        </div>
+        <div class="col-sm-10" dir="ltr">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    @await RenderSectionAsync("Styles", required: false)
+}
+
+@section Scripts {
+    @await RenderSectionAsync("Scripts", required: false)
+}

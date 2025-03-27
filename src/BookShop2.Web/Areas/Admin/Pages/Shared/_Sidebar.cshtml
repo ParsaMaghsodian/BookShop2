@@ -1,46 +1,16 @@
-﻿@* Sidebar.cshtml *@
-<div class="sidebar">
-    <h2>Admin Pannel</h2>
-    <ul>
-        <li><a asp-page="/Index">Home</a></li>
-        <li><a asp-page="/Books/Index">Books</a></li>
-        <li><a href="/Services">Services</a></li>
-        <li><a href="/Contact">Contact</a></li>
-    </ul>
+﻿<div class="list-group" style="border-radius:0">
+    <a href="#" class="list-group-item active">
+        Admin
+    </a>
+    <a asp-page="/Index" asp-area="" class="list-group-item">
+       <strong>Home</strong>
+    </a>
+    <a class="list-group-item" asp-area="Admin" asp-page="/Index">
+        <strong>Dashboard</strong>
+    </a>
+    <a class="list-group-item" asp-area="Admin" asp-page="/Books/Index">
+        <strong>Books</strong>
+    </a>
 </div>
 
-<style>
-    .sidebar {
-        width: 250px;
-        height: 100vh;
-        background-color: #f4f4f4;
-        padding: 20px;
-        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-        position: fixed; /* Fixed sidebar */
-    }
 
-        .sidebar h2 {
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-            .sidebar ul li {
-                margin: 15px 0;
-            }
-
-                .sidebar ul li a {
-                    text-decoration: none;
-                    color: #333;
-                    font-family: Arial, sans-serif;
-                }
-
-                    .sidebar ul li a:hover {
-                        color: #007BFF; /* Change color on hover */
-                    }
-</style>

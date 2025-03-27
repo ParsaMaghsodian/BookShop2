@@ -13,5 +13,5 @@ public class BookItem
     public  string  Name { get; init; }
     public string ? Author { get; init; }
     public int Price { get; init; }
-
+    public string BookCategoryName { get; init; }
 }

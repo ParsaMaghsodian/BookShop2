@@ -15,4 +15,7 @@ public interface IBookService
     BookDetails GetBookDetails(int id);
     BookEditModel GetEdit(int id);
     void Update(BookEditModel book);
+    ICollection<BookCategory> GetAllCategories();
+    void RemoveBook(int id);
+    BookRemoveModel GetRemove(int id);
 }

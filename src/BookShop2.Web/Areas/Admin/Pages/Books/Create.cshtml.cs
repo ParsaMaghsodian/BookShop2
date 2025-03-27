@@ -4,6 +4,7 @@ using BookShop2.Infrastructure.DataModels;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 
@@ -18,8 +19,11 @@ public class CreateModel : PageModel
     }
     [BindProperty]
     public BookCreateViewModel Book { get; set; }
+    public SelectList SelectListCategory { get; set; }
     public void OnGet()
     {
+        var categories = _bookService.GetAllCategories();
+        SelectListCategory = new SelectList(categories, "Id", "Name");
     }
     public IActionResult OnPost()
     {
@@ -57,7 +61,8 @@ public class CreateModel : PageModel
             Date = Book.Date,
             Price = Book.Price,
             Pages = Book.Pages,
-            Language = Book.Language
+            Language = Book.Language,
+            CategoryId = Book.CategoryId
         });
         return RedirectToPage("./Index");
     }
@@ -79,5 +84,7 @@ public class BookCreateViewModel
     public IFormFile? CoverImage { get; set; }
     public byte[]? CoverImageData { get; set; } = null;
     [Required(ErrorMessage = "Please Select a Language")]
-    public Language  Language { get; set; }
+    public Language Language { get; set; }
+    [Required(ErrorMessage = "Please Select a Category")]
+    public int CategoryId { get; set; }
 }

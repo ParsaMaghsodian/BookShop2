@@ -4,29 +4,17 @@
 
 @section Styles {
     @await RenderSectionAsync("Styles", required: false)
-    <style>
-        .sidebar {
-            width: 250px; /* Set a fixed width for the sidebar */
-            height: 100vh; /* Full height of the screen */
-            background-color: #f4f4f4; /* Light background */
-            position: fixed; /* Stick to the left of the screen */
-            top: 0; /* Align with the top of the page */
-            left: 0; /* Stick to the left */
-            padding: 20px; /* Add some spacing inside */
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Add a shadow for aesthetics */
-        }
-
-        .content {
-            margin-left: 250px; /* Ensure main content starts after the sidebar */
-            padding: 20px; /* Add some padding for spacing */
-        }
-    </style>
 }
 
-<partial name="_Sidebar" />
-
-<div class="content">
-    @RenderBody()
+<div class="container-fluid" dir="ltr">
+    <div class="row">
+        <div class="col-sm-2 p-0 m-0">
+            <partial name="_Sidebar">
+        </div>
+        <div class="col-sm-8 mx-5" dir="ltr">
+            @RenderBody()
+        </div>
+    </div>
 </div>
 
 @section Scripts {
