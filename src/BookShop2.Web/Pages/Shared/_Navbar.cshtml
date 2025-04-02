@@ -2,7 +2,7 @@
     <div class="container">
         <a class="navbar-brand" asp-area="" asp-page="/Index">BookShop2.Web</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
+        aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -13,12 +13,18 @@
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Admin" asp-page="/Index">Admin</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="User" asp-page="/Index">User</a>
-                </li>
+                @if (User.Identity!.IsAuthenticated && User.IsInRole("admin"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="Admin" asp-page="/Index">Admin</a>
+                    </li>
+                }
+                @if (User.Identity!.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="User" asp-page="/Index">User</a>
+                    </li>
+                }
             </ul>
             <partial name="_LoginPartial" />
         </div>
