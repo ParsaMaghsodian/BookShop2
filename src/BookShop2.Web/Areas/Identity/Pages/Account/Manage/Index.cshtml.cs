@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -58,6 +59,10 @@ namespace BookShop2.Web.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            [Display(Name = "FirstName")]
+            public string FirstName { get; set; }
+            [Display(Name = "LastName")]
+            public string LastName { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -69,8 +74,11 @@ namespace BookShop2.Web.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FirstName = user.FirstName,
+                LastName = user.LastName
             };
+
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -109,7 +117,14 @@ namespace BookShop2.Web.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
-
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+            var updateResult = await _userManager.UpdateAsync(user);
+            if (!updateResult.Succeeded)
+            {
+                StatusMessage = "Unexpected error when trying to update user profile.";
+                return RedirectToPage();
+            }
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();

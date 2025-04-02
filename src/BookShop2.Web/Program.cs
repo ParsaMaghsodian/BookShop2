@@ -14,11 +14,18 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<IBookService, BookService>();
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false).
+    AddDefaultUI()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdminRole", policy =>
+    policy.RequireRole("admin"));
+});
 builder.Services.AddRazorPages()
     .AddRazorPagesOptions(options =>
     {
+        options.Conventions.AuthorizeAreaFolder("Admin", "/", "RequireAdminRole");
         options.Conventions.AuthorizeAreaFolder("User", "/");
     });
 
@@ -45,6 +52,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

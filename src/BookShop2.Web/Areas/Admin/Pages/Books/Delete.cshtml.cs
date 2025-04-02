@@ -7,7 +7,10 @@ namespace BookShop2.Web.Areas.Admin.Pages.Books;
 
 public class DeleteModel : PageModel
 {
+    [BindProperty]
     public RemoveBookViewModel Book { get; set; }
+    [TempData]
+    public string StatusMessage { get; set; }
     private readonly IBookService _bookService;
     public DeleteModel(IBookService bookService)
     {
@@ -18,6 +21,7 @@ public class DeleteModel : PageModel
         if (id != 0)
         {
             _bookService.RemoveBook(id);
+            StatusMessage = "The book has been Deleted!";
             return RedirectToPage("./Index");
         }
         ModelState.AddModelError("", "Delete operation was not successful :(");
