@@ -25,7 +25,7 @@ public class BookService : IBookService
         _db.SaveChanges();
     }
 
-    public IList<BookItem> GetAllBooks()
+    public IList<BookItem> GetAllBooks(string term = "")
     {
         // Manual projection
         //return _db.Books?.Select(x => new BookItem
@@ -38,9 +38,17 @@ public class BookService : IBookService
         //    Author = x.Author,
         //    Date = x.Date,
         //}).ToList() ?? new List<BookItem>();
+        if (string.IsNullOrEmpty(term))
+        {
+            // Automated Projection By Mapster
+            return _db.Books.Include(c => c.BookCategory).ProjectToType<BookItem>().ToList();
+        }
+        else
+        {
+            return _db.Books.Where(b => b.Name.ToLower().StartsWith(term.ToLower()))
+                .Include(c => c.BookCategory).ProjectToType<BookItem>().ToList();  
+        }
 
-        // Automated Projection By Mapster
-        return _db.Books.Include(c => c.BookCategory).ProjectToType<BookItem>().ToList();
     }
 
     public ICollection<BookCategory> GetAllCategories()
