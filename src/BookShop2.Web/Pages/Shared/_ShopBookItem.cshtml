@@ -1,0 +1,14 @@
+﻿@model BookShop2.Application.DTO.BookItem
+
+<div class="card shadow border-0 rounded" style="width: 18rem; margin:15px;">
+    <vc:image-box classboot="card-img-top rounded-top"
+                  alt="Cover image of @Model.Name"
+                  contents="@Model.CoverImage"
+                  style="height: 280px; object-fit: contain;">
+    </vc:image-box>
+    <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text text-muted">Price: <strong>$@Model.Price</strong></p>
+        <a href="#" class="btn btn-primary  btn-sm w-100">Buy Now</a>
+    </div>
+</div>

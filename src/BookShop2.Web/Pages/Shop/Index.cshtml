@@ -1,0 +1,13 @@
+﻿@page
+@model BookShop2.Web.Pages.Shop.IndexModel
+@{
+    ViewData["Title"] = "Shop";
+}
+
+<div class="row">
+    @foreach (var book in Model.Books)
+    {
+      <partial name="_ShopBookItem" model="book"/>
+    } 
+    
+</div>
