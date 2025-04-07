@@ -11,4 +11,5 @@ namespace BookShop2.Application;
 public interface IUserService
 {
     Task<IEnumerable<UserIndex>> GetAllUsersAsync();
+    Task<int> GetUserCountAsync();
 }

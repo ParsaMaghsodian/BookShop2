@@ -18,9 +18,16 @@ public class UserService : IUserService
     {
         _userManager = userManager;
     }
+
+
     public async Task<IEnumerable<UserIndex>> GetAllUsersAsync()
     {
 
         return await _userManager.Users.ProjectToType<UserIndex>().ToListAsync();
+    }
+
+    public async Task<int> GetUserCountAsync()
+    {
+        return await _userManager.Users.CountAsync();
     }
 }
