@@ -30,6 +30,8 @@ builder.Services.AddRazorPages()
         options.Conventions.AuthorizeAreaFolder("User", "/");
     });
 
+builder.Services.AddControllers();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -45,7 +47,7 @@ else
 }
 app.Use(async (context, next) =>
 {
-    context.Features.Get<IHttpMaxRequestBodySizeFeature>().MaxRequestBodySize = 10 * 1024 * 1024; // 10 MB
+    context.Features.Get<IHttpMaxRequestBodySizeFeature>().MaxRequestBodySize = 100 * 1024 * 1024; // 100 MB
     await next();
 });
 app.UseHttpsRedirection();
@@ -56,6 +58,8 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapControllers();
 app.MapRazorPages();
+
 
 app.Run();
