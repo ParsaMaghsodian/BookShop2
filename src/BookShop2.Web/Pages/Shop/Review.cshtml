@@ -1,0 +1,51 @@
+﻿@page
+@model BookShop2.Web.Pages.Shop.ReviewModel
+@{
+    ViewData["Title"] = "Book Review";
+}
+
+<div class="container my-5">
+    <div class="row">
+        <!-- Book Cover Image -->
+        <div class="col-md-4">
+            <vc:image-box classboot="img-fluid rounded shadow-lg"
+                          contents="@Model.Book.CoverImage"
+                          alt="Book Cover"
+                           style="">
+            </vc:image-box>
+        </div>
+
+        <!-- Book Details -->
+        <div class="col-md-8">
+            <h2>@Model.Book.Name</h2>
+            <p class="text-muted">@Model.Book.Description</p>
+            <div>
+                <strong>Author:</strong> @Model.Book.Author
+            </div>
+            <div>
+                <strong>Language:</strong> @Model.Book.Language
+            </div>
+            <div>
+                <strong>Number of Pages:</strong> @Model.Book.Pages
+            </div>
+            <div>
+                <strong>Price:</strong> $@Model.Book.Price
+            </div>
+
+            <!-- Order Button -->
+            <form method="post">
+                <div class="mt-4">
+                    <input type="hidden" asp-for="@Model.Book.Id" />
+                    <input type="hidden" asp-for="@Model.Book.Price" />
+                    <button class="btn btn-primary btn-lg">Order Now</button>
+                </div>
+            </form>
+          
+        </div>
+    </div>
+</div>
+
+
+
+
+

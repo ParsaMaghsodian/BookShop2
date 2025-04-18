@@ -39,10 +39,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             );
         builder.ApplyConfiguration(new BookDataConfiguration());
         builder.ApplyConfiguration(new BookCategoryConfiguration());
+        builder.ApplyConfiguration(new OrderDataConfiguration());
         base.OnModelCreating(builder);
     }
 
     public DbSet<BookData> Books { get; set; }
     public DbSet<BookCategory> Categories { get; set; }
-
+    public DbSet<OrderData> Orders { get; set; }
 }
