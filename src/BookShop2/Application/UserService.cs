@@ -22,7 +22,7 @@ public class UserService : IUserService
 
     public async Task<IEnumerable<UserIndex>> GetAllUsersAsync()
     {
-
+        
         return await _userManager.Users.ProjectToType<UserIndex>().ToListAsync();
     }
 

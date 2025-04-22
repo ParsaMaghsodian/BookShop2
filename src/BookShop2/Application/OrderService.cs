@@ -52,4 +52,23 @@ public class OrderService : IOrderService
              OrderId = o.OrderId
          }).FirstOrDefault(o => o.OrderId == orderId);
     }
+    public async Task<IList<TopSellingBookItem>> GetTopSellingBooksAsync(int count = 3)
+    {
+        var result = await _db.Orders
+            .Where(o=>o.State==OrderState.Confirmed)
+            .GroupBy(o => new { o.BookId, o.Book.Name, o.Book.CoverImage })
+            .Select(g => new TopSellingBookItem
+            {
+                BookId = g.Key.BookId,
+                BookName = g.Key.Name,
+                CoverImage = g.Key.CoverImage,
+                NumberOfSales = g.Count()
+            })
+            .OrderByDescending(x => x.NumberOfSales)
+            .Take(count)
+            .ToListAsync();
+
+        return result;
+    }
+
 }
