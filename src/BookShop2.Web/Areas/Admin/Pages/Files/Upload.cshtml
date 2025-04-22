@@ -1,0 +1,20 @@
+﻿@page
+@model BookShop2.Web.Areas.Admin.Pages.Files.UploadModel
+@{
+    ViewData["Title"] = "UploadFile";
+}
+
+<div class="container mt-5">
+    <form method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="UploadedFile" class="form-label">File</label>
+            <input asp-for="UploadedFile" class="form-control" />
+            <span asp-validation-for="UploadedFile" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+        <a asp-page="/Files/Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+

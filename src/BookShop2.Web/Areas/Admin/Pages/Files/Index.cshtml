@@ -1,0 +1,47 @@
+﻿@page
+@model BookShop2.Web.Areas.Admin.Pages.Files.IndexModel
+@{
+    ViewData["Title"] = "Files";
+}
+
+
+<partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
+
+<div class="container mt-5">
+    <h2 class="text-primary">Files</h2>
+    <table class="table table-bordered table-striped mt-3">
+        <thead class="table-primary">
+            <tr>
+                <th>File Name</th>
+                <th>File Size</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.FilesList.Any())
+            {
+                foreach (var file in Model.FilesList)
+                {
+                    <tr>
+                        <td>@file.Name</td>
+                        <td>@(file.Length / (1024 * 1024)) MB</td>
+                        <td>
+                            <a asp-area="" asp-controller="Files" asp-action="Download" asp-route-filename="@file.Name" class="btn btn-info btn-sm">Download</a>
+                            <form method="post" asp-route-filename="@file.Name" style="display:inline">
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this File?');">Delete</button>
+                            </form>
+                        </td>
+
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3" class="text-center">No files available.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-page="/Files/Upload" class="btn btn-primary">Upload New File</a>
+</div>

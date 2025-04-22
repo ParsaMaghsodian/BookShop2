@@ -5,6 +5,7 @@ using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Shared;
 using System.ComponentModel.DataAnnotations;
 
 namespace BookShop2.Web.Areas.Admin.Pages.Books;
@@ -14,15 +15,17 @@ public class EditModel : PageModel
     [BindProperty]
     public BookEditViewModel BookEdit { get; set; }
     public SelectList SelectListCategory { get; set; }
+    [TempData]
+    public string StatusMessage { get; set; }
     private readonly IBookService _bookService;
     public EditModel(IBookService bookService)
     {
         _bookService = bookService;
     }
     public void OnGet(int id)
-    { 
+    {
         var categories = _bookService.GetAllCategories();
-        SelectListCategory = new SelectList(categories,"Id","Name");
+        SelectListCategory = new SelectList(categories, "Id", "Name");
         BookEdit = _bookService.GetEdit(id).Adapt<BookEditViewModel>();
 
     }
@@ -48,6 +51,7 @@ public class EditModel : PageModel
         }
 
         _bookService.Update(BookEdit.Adapt<BookEditModel>());
+        StatusMessage = "The book has been Updated!";
         return RedirectToPage("./Index");
     }
 }

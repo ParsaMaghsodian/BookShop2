@@ -10,7 +10,7 @@ namespace BookShop2.Application;
 
 public interface IBookService
 {
-    IList<BookItem> GetAllBooks();
+    IList<BookItem> GetAllBooks(string term="");
     void AddBook(BookCreateModel item);
     BookDetails GetBookDetails(int id);
     BookEditModel GetEdit(int id);

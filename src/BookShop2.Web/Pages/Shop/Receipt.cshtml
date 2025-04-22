@@ -1,0 +1,29 @@
+﻿@page
+@model BookShop2.Web.Pages.Shop.ReceiptModel
+@{
+    ViewData["Title"] = "Order Receipt";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <h2 class="mb-4">Thank You for Your Order!</h2>
+
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h5 class="card-title">Order Receipt</h5>
+                    <hr />
+                    <p><strong>Order ID:</strong> @Model.OrderDetails.OrderId</p>
+                    <p><strong>Book Name:</strong> @Model.OrderDetails.BookName (@Model.OrderDetails.CategoryName)</p>
+                    <p><strong>Total Price:</strong> $@Model.OrderDetails.Amount</p>
+                    <p><strong>Username:</strong> @Model.OrderDetails.UserName</p>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <a asp-page="/Shop/Index" class="btn btn-primary">Back to Shop</a>
+            </div>
+        </div>
+    </div>
+</div>
+

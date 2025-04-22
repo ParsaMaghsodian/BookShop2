@@ -14,13 +14,24 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<IBookService, BookService>();
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false).
+    AddDefaultUI()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdminRole", policy =>
+    policy.RequireRole("admin"));
+});
 builder.Services.AddRazorPages()
     .AddRazorPagesOptions(options =>
     {
+        options.Conventions.AuthorizeAreaFolder("Admin", "/", "RequireAdminRole");
         options.Conventions.AuthorizeAreaFolder("User", "/");
     });
+
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -37,7 +48,7 @@ else
 }
 app.Use(async (context, next) =>
 {
-    context.Features.Get<IHttpMaxRequestBodySizeFeature>().MaxRequestBodySize = 10 * 1024 * 1024; // 10 MB
+    context.Features.Get<IHttpMaxRequestBodySizeFeature>().MaxRequestBodySize = 100 * 1024 * 1024; // 100 MB
     await next();
 });
 app.UseHttpsRedirection();
@@ -45,8 +56,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapControllers();
 app.MapRazorPages();
+
 
 app.Run();

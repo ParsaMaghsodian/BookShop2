@@ -20,6 +20,8 @@ public class CreateModel : PageModel
     [BindProperty]
     public BookCreateViewModel Book { get; set; }
     public SelectList SelectListCategory { get; set; }
+    [TempData]
+    public string StatusMessage { get; set; }
     public void OnGet()
     {
         var categories = _bookService.GetAllCategories();
@@ -64,6 +66,7 @@ public class CreateModel : PageModel
             Language = Book.Language,
             CategoryId = Book.CategoryId
         });
+        StatusMessage = "The Book has been Created!";
         return RedirectToPage("./Index");
     }
 }
