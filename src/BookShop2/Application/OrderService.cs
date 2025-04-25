@@ -55,7 +55,7 @@ public class OrderService : IOrderService
     public async Task<IList<TopSellingBookItem>> GetTopSellingBooksAsync(int count = 3)
     {
         var result = await _db.Orders
-            .Where(o=>o.State==OrderState.Confirmed)
+            .Where(o => o.State == OrderState.Confirmed)
             .GroupBy(o => new { o.BookId, o.Book.Name, o.Book.CoverImage })
             .Select(g => new TopSellingBookItem
             {
@@ -69,6 +69,11 @@ public class OrderService : IOrderService
             .ToListAsync();
 
         return result;
+    }
+    public async Task<bool> IsBoughtByThisUser(string userId, int bookId)
+    {
+        return await _db.Orders
+            .AnyAsync(o => o.UserId == userId && o.BookId == bookId && o.State == OrderState.Confirmed);
     }
 
 }

@@ -8,4 +8,5 @@ public interface IOrderService
     public void Confirm(int orderId);
     public OrderDetails GetOrder(int orderId);
     public Task<IList<TopSellingBookItem>> GetTopSellingBooksAsync(int count = 3);
+    Task<bool> IsBoughtByThisUser(string userId, int bookId);
 }

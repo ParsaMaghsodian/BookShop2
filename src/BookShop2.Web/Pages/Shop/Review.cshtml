@@ -6,6 +6,7 @@
 
 <div class="container my-5">
     <div class="row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <!-- Book Cover Image -->
         <div class="col-md-4">
             <vc:image-box classboot="img-fluid rounded shadow-lg"
@@ -33,14 +34,19 @@
             </div>
 
             <!-- Order Button -->
-            <form method="post">
-                <div class="mt-4">
+            <div class="mt-4 d-flex gap-2">
+                <form method="post" class="m-0">
                     <input type="hidden" asp-for="@Model.Book.Id" />
                     <input type="hidden" asp-for="@Model.Book.Price" />
                     <button class="btn btn-primary btn-lg">Order Now</button>
-                </div>
-            </form>
-          
+                </form>
+
+                <a asp-page="/Shop/Index" class="btn btn-outline-secondary btn-lg">
+                    <i class="bi bi-arrow-left"></i> Back to Shop
+                </a>
+            </div>
+
+
         </div>
     </div>
 </div>
