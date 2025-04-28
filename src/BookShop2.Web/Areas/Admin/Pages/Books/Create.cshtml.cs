@@ -5,6 +5,7 @@ using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 
@@ -64,7 +65,8 @@ public class CreateModel : PageModel
             Price = Book.Price,
             Pages = Book.Pages,
             Language = Book.Language,
-            CategoryId = Book.CategoryId
+            CategoryId = Book.CategoryId,
+            FileName = Book.FileName
         });
         StatusMessage = "The Book has been Created!";
         return RedirectToPage("./Index");
@@ -77,6 +79,7 @@ public class BookCreateViewModel
     [StringLength(40, ErrorMessage = "length must be between {2} and {1}.", MinimumLength = 2)]
     [Required]
     public string Name { get; set; }
+    public string ? FileName { get; set; }
     public string? Description { get; set; }
     public string? Author { get; set; }
     public DateTime Date { get; set; }

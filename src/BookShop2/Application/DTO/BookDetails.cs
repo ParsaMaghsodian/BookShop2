@@ -10,6 +10,7 @@ public class BookDetails
 {
     public int Id { get; init; }
     public string Name { get; init; }
+    public string? FileName { get; init; }
     public string? Description { get; init; }
     public string? Author { get; init; }
     public DateTime Date { get; init; }

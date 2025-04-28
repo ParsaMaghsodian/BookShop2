@@ -8,6 +8,7 @@ namespace BookShop2.Application.DTO;
 
 public class UserOrderItem
 {
+    public int BookId { get; set; }
     public string BookName { get; init; }
     public DateTime TimeCreation { get; init; }
     public int Amount { get; init; }
