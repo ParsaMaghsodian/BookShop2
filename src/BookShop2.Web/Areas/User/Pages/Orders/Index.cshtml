@@ -1,0 +1,42 @@
+﻿@page
+@model BookShop2.Web.Areas.User.Pages.Orders.IndexModel
+@{
+    ViewData["Title"] = "UserOrders";
+}
+
+<div class="container mt-5">
+    <h2 class="text-primary"> @Model.UserName Orders</h2>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped mt-3">
+            <thead class="table-primary">
+                <tr>
+                    <th>Book</th>
+                    <th>Total</th>
+                    <th>Order Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.UserOrders is not null && Model.UserOrders.Any())
+                {
+                    foreach (var order in Model.UserOrders)
+                    {
+                        <tr>
+                            <td>@order.BookName</td>
+                            <td>$@order.Amount</td>
+                            <td>@order.TimeCreation.ToString("yyyy-MM-dd")</td>
+                            <td><a class="btn btn-info btn-sm">Download</a></td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center">No orders available.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

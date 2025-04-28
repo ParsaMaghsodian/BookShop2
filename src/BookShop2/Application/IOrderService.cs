@@ -9,4 +9,6 @@ public interface IOrderService
     public OrderDetails GetOrder(int orderId);
     public Task<IList<TopSellingBookItem>> GetTopSellingBooksAsync(int count = 3);
     Task<bool> IsBoughtByThisUser(string userId, int bookId);
+    Task<IEnumerable<OrderItems>> GetAllOrdersAsync();
+    Task<IEnumerable<UserOrderItem>> GetAllOrdersByUserAsync(string userId);
 }

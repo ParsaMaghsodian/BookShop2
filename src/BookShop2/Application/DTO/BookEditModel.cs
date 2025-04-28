@@ -19,7 +19,6 @@ public class BookEditModel
     public int Pages { get; init; }
     public byte[]? CoverImage { get; init; }
     public Language Language { get; init; }
-
     public int CategoryId { get; set; }
 
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BookShop2.Application;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BookShop2.Web.Controllers;
 
@@ -6,9 +7,11 @@ namespace BookShop2.Web.Controllers;
 public class FilesController : Controller
 {
     private readonly IWebHostEnvironment _webHostEnvironment;
-    public FilesController(IWebHostEnvironment webHostEnvironment)
+    private readonly IBookService _bookService;
+    public FilesController(IWebHostEnvironment webHostEnvironment, IBookService bookService)
     {
-            _webHostEnvironment = webHostEnvironment;
+        _webHostEnvironment = webHostEnvironment;
+        _bookService = bookService;
     }
 
     [HttpGet]
@@ -24,6 +27,22 @@ public class FilesController : Controller
         {
             return NotFound($"The file '{filename}' does not exist.");
         }
-        
+
     }
+    //[HttpGet]
+    //public IActionResult Download(int bookId)
+    //{
+    //    var book = _bookService.GetBookDetails(bookId);
+    //    var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Areas", "Files");
+    //    if (System.IO.File.Exists(filePath))
+    //    {
+    //        var content = System.IO.File.ReadAllBytes(filePath);
+    //        return File(content, "aplication/pdf", filename);
+    //    }
+    //    else
+    //    {
+    //        return NotFound($"The file '{filename}' does not exist.");
+    //    }
+
+    //}
 }

@@ -40,6 +40,16 @@ public class OrderService : IOrderService
         _db.SaveChanges();
     }
 
+    public async Task<IEnumerable<OrderItems>> GetAllOrdersAsync()
+    {
+        return await _db.Orders.ProjectToType<OrderItems>().ToListAsync();
+    }
+
+    public async Task<IEnumerable<UserOrderItem>> GetAllOrdersByUserAsync(string userId)
+    {
+        return await _db.Orders.Where(o => o.UserId == userId).ProjectToType<UserOrderItem>().ToListAsync();
+    }
+
     public OrderDetails GetOrder(int orderId)
     {
         return _db.Orders

@@ -46,7 +46,7 @@ public class BookService : IBookService
         else
         {
             return _db.Books.Where(b => b.Name.ToLower().StartsWith(term.ToLower()))
-                .Include(c => c.BookCategory).ProjectToType<BookItem>().ToList();  
+                .Include(c => c.BookCategory).ProjectToType<BookItem>().ToList();
         }
 
     }
@@ -84,7 +84,27 @@ public class BookService : IBookService
 
     public void Update(BookEditModel book)
     {
-        _db.Books.Update(book.Adapt<BookData>());
+        //// روش اول
+        //_db.Books.Update(book.Adapt<BookData>());
+        //_db.SaveChanges();
+
+        //// روش دوم
+        //var oldbook = _db.Books.Find(book.Id);
+        //oldbook.Date = book.Date;
+        //oldbook.Description = book.Description;
+        //oldbook.Author = book.Author;
+        //oldbook.Name = book.Name;
+        //oldbook.CoverImage = book.CoverImage;
+        //oldbook.CategoryId = book.CategoryId;
+        //oldbook.Price = book.Price;
+        //oldbook.Pages = book.Pages;
+        //oldbook.Language = book.Language;
+        //_db.SaveChanges();
+
+        // روش سوم 
+
+        var oldbook = _db.Books.Find(book.Id);
+        _db.Entry(oldbook).CurrentValues.SetValues(book);
         _db.SaveChanges();
 
     }
