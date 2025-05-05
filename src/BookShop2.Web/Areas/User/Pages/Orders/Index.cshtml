@@ -3,37 +3,69 @@
 @{
     ViewData["Title"] = "UserOrders";
 }
+<partial name="_StatusMessage" model="@TempData["StatusMessage"]">
 
-<div class="container mt-5">
-    <h2 class="text-primary"> @Model.UserName Orders</h2>
+<div class="container mt-5 text-black text-center">
+    <h2 class="text-primary display-5">@Model.UserName's Orders</h2>
 
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped mt-3">
-            <thead class="table-primary">
+    <div class="table-responsive mt-4">
+        <table class="table table-bordered table-hover">
+            <thead class="table-primary fs-5">
                 <tr>
                     <th>Book</th>
                     <th>Total</th>
                     <th>Order Date</th>
-                    <th>Actions</th>
+                    <th>File</th>
+                    <th>Rating</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="fs-5">
                 @if (Model.UserOrders is not null && Model.UserOrders.Any())
                 {
                     foreach (var order in Model.UserOrders)
                     {
                         <tr>
-                            <td>@order.BookName</td>
-                            <td>$@order.Amount</td>
-                            <td>@order.TimeCreation.ToString("yyyy-MM-dd")</td>
-                            <td><a asp-controller="Files" asp-action="Download" asp-route-bookId="@order.BookId" class="btn btn-info btn-sm">Download</a></td>
+                            <td class="align-middle">@order.BookName</td>
+                            <td class="align-middle">$@order.Amount</td>
+                            <td class="align-middle">@order.TimeCreation.ToString("yyyy-MM-dd")</td>
+                            <td class="align-middle">
+                                <a asp-controller="Files"
+                                   asp-action="Download"
+                                   asp-route-bookId="@order.BookId"
+                                   class="btn btn-info btn-lg">Download</a>
+                            </td>
+                            <td class="align-middle">
+                                @if (order.RatingScore is not null)
+                                {
+                                    <div class="d-flex justify-content-center gap-1">
+                                        @for (int i = 1; i <= 5; i++)
+                                        {
+                                            if (i <= (int)order.RatingScore)
+                                            {
+                                                <span style="font-size: 2rem; color: gold;">&#9733;</span>
+                                            }
+                                            else
+                                            {
+                                                <span style="font-size: 2rem; color: lightgray;">&#9734;</span>
+                                            }
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <a asp-page="./Rate"
+                                       asp-route-orderId="@order.OrderId"
+                                       asp-route-bookId="@order.BookId"
+                                       class="btn btn-warning btn-lg">Rate</a>
+                                }
+                            </td>
                         </tr>
                     }
                 }
                 else
                 {
                     <tr>
-                        <td colspan="5" class="text-center">No orders available.</td>
+                        <td colspan="5" class="text-center fs-4">No orders available.</td>
                     </tr>
                 }
             </tbody>

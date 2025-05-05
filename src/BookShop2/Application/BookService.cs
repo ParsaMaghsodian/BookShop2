@@ -1,4 +1,5 @@
 ﻿using BookShop2.Application.DTO;
+using BookShop2.Application.Mappers;
 using BookShop2.Infrastructure;
 using BookShop2.Infrastructure.DataModels;
 using Mapster;
@@ -58,7 +59,7 @@ public class BookService : IBookService
 
     public BookDetails GetBookDetails(int id)
     {
-        return _db.Books.ProjectToType<BookDetails>().First(x => x.Id == id);
+        return _db.Books.Select(BookMapper.BookDetailsSelector).First(x => x.Id == id);
     }
 
     public BookEditModel GetEdit(int id)

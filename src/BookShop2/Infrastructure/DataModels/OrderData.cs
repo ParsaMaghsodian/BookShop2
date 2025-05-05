@@ -9,6 +9,7 @@ namespace BookShop2.Infrastructure.DataModels;
 public class OrderData
 {
     public int OrderId { get; set; }
+    public RatingData? Rating { get; set; }
     public OrderState State { get; set; } // Enum 
     public int Amount { get; set; }
     public DateTime TimeCreation { get; set; }

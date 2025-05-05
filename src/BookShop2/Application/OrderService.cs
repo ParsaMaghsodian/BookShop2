@@ -1,6 +1,7 @@
 ﻿using BookShop2.Application.DTO;
 using BookShop2.Infrastructure;
 using BookShop2.Infrastructure.DataModels;
+using BookShop2.Migrations;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -47,7 +48,7 @@ public class OrderService : IOrderService
 
     public async Task<IEnumerable<UserOrderItem>> GetAllOrdersByUserAsync(string userId)
     {
-        return await _db.Orders.Where(o => o.UserId == userId).ProjectToType<UserOrderItem>().ToListAsync();
+        return await _db.Orders.Where(o => o.UserId == userId && o.State == OrderState.Confirmed).ProjectToType<UserOrderItem>().ToListAsync();
     }
 
     public OrderDetails GetOrder(int orderId)
@@ -84,6 +85,19 @@ public class OrderService : IOrderService
     {
         return await _db.Orders
             .AnyAsync(o => o.UserId == userId && o.BookId == bookId && o.State == OrderState.Confirmed);
+    }
+    public async Task AddRatingAsync(int orderId, RatingScore score)
+    {
+        var order = await _db.Orders.FindAsync(orderId);
+        order.Rating = new RatingData
+        {
+            TimeCreation = DateTime.Now,
+            BookId = order.BookId,
+            OrderId = orderId,
+            Score = score
+        };
+
+        _db.SaveChanges();
     }
 
 }
