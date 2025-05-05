@@ -1,6 +1,7 @@
 ﻿using BookShop2.Application.DTO;
 using BookShop2.Infrastructure;
 using BookShop2.Infrastructure.DataModels;
+using BookShop2.Migrations;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -40,6 +41,16 @@ public class OrderService : IOrderService
         _db.SaveChanges();
     }
 
+    public async Task<IEnumerable<OrderItems>> GetAllOrdersAsync()
+    {
+        return await _db.Orders.ProjectToType<OrderItems>().ToListAsync();
+    }
+
+    public async Task<IEnumerable<UserOrderItem>> GetAllOrdersByUserAsync(string userId)
+    {
+        return await _db.Orders.Where(o => o.UserId == userId && o.State == OrderState.Confirmed).ProjectToType<UserOrderItem>().ToListAsync();
+    }
+
     public OrderDetails GetOrder(int orderId)
     {
         return _db.Orders
@@ -52,4 +63,41 @@ public class OrderService : IOrderService
              OrderId = o.OrderId
          }).FirstOrDefault(o => o.OrderId == orderId);
     }
+    public async Task<IList<TopSellingBookItem>> GetTopSellingBooksAsync(int count = 3)
+    {
+        var result = await _db.Orders
+            .Where(o => o.State == OrderState.Confirmed)
+            .GroupBy(o => new { o.BookId, o.Book.Name, o.Book.CoverImage })
+            .Select(g => new TopSellingBookItem
+            {
+                BookId = g.Key.BookId,
+                BookName = g.Key.Name,
+                CoverImage = g.Key.CoverImage,
+                NumberOfSales = g.Count()
+            })
+            .OrderByDescending(x => x.NumberOfSales)
+            .Take(count)
+            .ToListAsync();
+
+        return result;
+    }
+    public async Task<bool> IsBoughtByThisUser(string userId, int bookId)
+    {
+        return await _db.Orders
+            .AnyAsync(o => o.UserId == userId && o.BookId == bookId && o.State == OrderState.Confirmed);
+    }
+    public async Task AddRatingAsync(int orderId, RatingScore score)
+    {
+        var order = await _db.Orders.FindAsync(orderId);
+        order.Rating = new RatingData
+        {
+            TimeCreation = DateTime.Now,
+            BookId = order.BookId,
+            OrderId = orderId,
+            Score = score
+        };
+
+        _db.SaveChanges();
+    }
+
 }

@@ -25,4 +25,11 @@
     <Folder Include="Areas\Files\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Areas\User\Pages\Shared\_StatusMessage.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

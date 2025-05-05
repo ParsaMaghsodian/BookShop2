@@ -40,6 +40,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         builder.ApplyConfiguration(new BookDataConfiguration());
         builder.ApplyConfiguration(new BookCategoryConfiguration());
         builder.ApplyConfiguration(new OrderDataConfiguration());
+        builder.ApplyConfiguration(new RatingDataConfiguartion());
         base.OnModelCreating(builder);
     }
 

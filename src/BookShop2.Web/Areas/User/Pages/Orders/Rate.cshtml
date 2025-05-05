@@ -1,0 +1,60 @@
+﻿@page
+@model BookShop2.Web.Areas.User.Pages.Orders.RateModel
+@{
+    ViewData["title"] = "Rating Book";
+}
+
+<div class="container mt-5 text-center">
+    <h2>Rate the Book</h2>
+
+    <div class="mb-4">
+        <vc:image-box classboot="img-thumbnail"
+                      contents="@Model.Book.CoverImage"
+                      alt="Book Cover"
+                      style="max-height: 300px;">
+        </vc:image-box>
+        <h4 class="mt-3">@Model.Book.Name</h4>
+    </div>
+
+    <form method="post" id="ratingForm">
+        <div class="form-group">
+            <label class="mb-2">Click to rate:</label>
+            <div id="starContainer" class="mb-3">
+                @for (int i = 1; i <= 5; i++)
+                {
+                    <span class="star" data-value="@i" style="font-size: 2rem; cursor: pointer; color: lightgray;">&#9733;</span>
+                }
+            </div>
+        </div>
+
+        <input type="hidden" asp-for="Score" id="scoreInput" />
+        <input type="hidden" asp-for="OrderId" />
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">Save Rating</button>
+            <a asp-page="./Index" class="btn btn-secondary">Back to Orders</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        const stars = document.querySelectorAll('.star');
+        const scoreInput = document.getElementById('scoreInput');
+
+        stars.forEach(star => {
+            star.addEventListener('click', function () {
+                const value = this.getAttribute('data-value');
+                scoreInput.value = value;
+
+                // Reset all stars
+                stars.forEach(s => s.style.color = 'lightgray');
+
+                // Highlight selected stars
+                for (let i = 0; i < value; i++) {
+                    stars[i].style.color = 'gold';
+                }
+            });
+        });
+    </script>
+}

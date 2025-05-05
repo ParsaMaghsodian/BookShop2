@@ -2,16 +2,19 @@
 @model BookShop2.Web.Pages.Shop.ReviewModel
 @{
     ViewData["Title"] = "Book Review";
+    @addTagHelper *, BookShop2.Web
 }
 
 <div class="container my-5">
     <div class="row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
         <!-- Book Cover Image -->
         <div class="col-md-4">
-            <vc:image-box classboot="img-fluid rounded shadow-lg"
+               <vc:image-box classboot="img-fluid rounded shadow-lg"
                           contents="@Model.Book.CoverImage"
                           alt="Book Cover"
-                           style="">
+                          style="">
             </vc:image-box>
         </div>
 
@@ -19,33 +22,53 @@
         <div class="col-md-8">
             <h2>@Model.Book.Name</h2>
             <p class="text-muted">@Model.Book.Description</p>
-            <div>
-                <strong>Author:</strong> @Model.Book.Author
-            </div>
-            <div>
-                <strong>Language:</strong> @Model.Book.Language
-            </div>
-            <div>
-                <strong>Number of Pages:</strong> @Model.Book.Pages
-            </div>
-            <div>
-                <strong>Price:</strong> $@Model.Book.Price
-            </div>
+            <div><strong>Author:</strong> @Model.Book.Author</div>
+            <div><strong>Language:</strong> @Model.Book.Language</div>
+            <div><strong>Number of Pages:</strong> @Model.Book.Pages</div>
+            <div><strong>Price:</strong> $@Model.Book.Price</div>
+
+            <!-- ⭐ Average Rating Display -->
+            @if (Model.Book.RatingsScore is not null && Model.Book.RatingsScore.Any())
+            {
+                var avg = Model.Book.RatingsScore.Average();
+                <div class="mt-3">
+                    <strong>Average Rating:</strong>
+                    <span class="text-warning fs-4">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            if (i <= Math.Round(avg))
+                            {
+                                <span style="font-size: 2rem; color: gold;">&#9733;</span>
+                            }
+                            else
+                            {
+                                <span style="font-size: 2rem; color: lightgray;">&#9733;</span>
+                            }
+                        }
+                        <span class="text-dark fs-6">(@avg.ToString("0.0"))</span>
+                    </span>
+                </div>
+            }
+            else
+            {
+                <div class="mt-3">
+                    <strong>Average Rating:</strong>
+                    <span class="text-muted">No ratings yet</span>
+                </div>
+            }
 
             <!-- Order Button -->
-            <form method="post">
-                <div class="mt-4">
+            <div class="mt-4 d-flex gap-2">
+                <form method="post" class="m-0">
                     <input type="hidden" asp-for="@Model.Book.Id" />
                     <input type="hidden" asp-for="@Model.Book.Price" />
                     <button class="btn btn-primary btn-lg">Order Now</button>
-                </div>
-            </form>
-          
+                </form>
+
+                <a asp-page="/Shop/Index" class="btn btn-outline-secondary btn-lg">
+                    <i class="bi bi-arrow-left"></i> Back to Shop
+                </a>
+            </div>
         </div>
     </div>
 </div>
-
-
-
-
-

@@ -61,6 +61,7 @@ public class BookEditViewModel
     [StringLength(40, ErrorMessage = "length must be between {2} and {1}.", MinimumLength = 2)]
     [Required]
     public required string Name { get; set; }
+    public string? FileName { get; set; }
     public string? Description { get; set; }
     public string? Author { get; set; }
     public DateTime Date { get; set; }

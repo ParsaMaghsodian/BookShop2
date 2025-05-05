@@ -15,7 +15,8 @@ public class BookDataConfiguration : IEntityTypeConfiguration<BookData>
     {
         builder.ToTable("Books");
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Name).IsRequired().HasMaxLength(40);
+        builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
+        builder.Property(x => x.FileName).HasMaxLength(100);
         builder.Property(x => x.Description).HasMaxLength(1000);
         builder.Property(x => x.Date).HasColumnType("date");
         builder.Property(x => x.Author).HasMaxLength(50);

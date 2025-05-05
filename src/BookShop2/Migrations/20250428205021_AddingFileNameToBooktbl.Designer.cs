@@ -4,6 +4,7 @@ using BookShop2.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookShop2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250428205021_AddingFileNameToBooktbl")]
+    partial class AddingFileNameToBooktbl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,7 +113,7 @@ namespace BookShop2.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -161,16 +164,16 @@ namespace BookShop2.Migrations
                         .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("FileName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Language")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<int>("Pages")
                         .HasColumnType("int");
@@ -224,30 +227,6 @@ namespace BookShop2.Migrations
                         {
                             t.HasCheckConstraint("CK_OrderData_Amount", "[Amount] >= 0 AND [Amount] <= 1000");
                         });
-                });
-
-            modelBuilder.Entity("BookShop2.Infrastructure.DataModels.RatingData", b =>
-                {
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Score")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TimeCreation")
-                        .HasColumnType("date");
-
-                    b.HasKey("OrderId", "BookId");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
-
-                    b.ToTable("RatingData", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -413,25 +392,6 @@ namespace BookShop2.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("BookShop2.Infrastructure.DataModels.RatingData", b =>
-                {
-                    b.HasOne("BookShop2.Infrastructure.DataModels.BookData", "Book")
-                        .WithMany("Ratings")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("BookShop2.Infrastructure.DataModels.OrderData", "Order")
-                        .WithOne("Rating")
-                        .HasForeignKey("BookShop2.Infrastructure.DataModels.RatingData", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -480,17 +440,6 @@ namespace BookShop2.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BookShop2.Infrastructure.DataModels.BookData", b =>
-                {
-                    b.Navigation("Ratings");
-                });
-
-            modelBuilder.Entity("BookShop2.Infrastructure.DataModels.OrderData", b =>
-                {
-                    b.Navigation("Rating")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
