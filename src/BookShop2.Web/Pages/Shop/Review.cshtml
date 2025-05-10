@@ -28,15 +28,15 @@
             <div><strong>Price:</strong> $@Model.Book.Price</div>
 
             <!-- ⭐ Average Rating Display -->
-            @if (Model.Book.RatingsScore is not null && Model.Book.RatingsScore.Any())
+            @if (Model.Book.AvgRating is not null)
             {
-                var avg = Model.Book.RatingsScore.Average();
+              
                 <div class="mt-3">
                     <strong>Average Rating:</strong>
                     <span class="text-warning fs-4">
                         @for (int i = 1; i <= 5; i++)
                         {
-                            if (i <= Math.Round(avg))
+                            if (i <= Math.Round(Model.Book.AvgRating.Value))
                             {
                                 <span style="font-size: 2rem; color: gold;">&#9733;</span>
                             }
@@ -45,7 +45,7 @@
                                 <span style="font-size: 2rem; color: lightgray;">&#9733;</span>
                             }
                         }
-                        <span class="text-dark fs-6">(@avg.ToString("0.0"))</span>
+                        <span class="text-dark fs-6">(@Model.Book.AvgRating.Value.ToString("0.0"))</span>
                     </span>
                 </div>
             }

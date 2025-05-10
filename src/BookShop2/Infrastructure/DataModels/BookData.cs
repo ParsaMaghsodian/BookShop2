@@ -23,4 +23,6 @@ public class BookData
     public Language Language { get; set; }
     public int CategoryId { get; set; }
     public BookCategory BookCategory { get; set; }
+    public int ?RatingCount { get; set; }
+    public double ?AvgRating { get; set; }
 }

@@ -88,7 +88,7 @@ public class OrderService : IOrderService
     }
     public async Task AddRatingAsync(int orderId, RatingScore score)
     {
-        var order = await _db.Orders.FindAsync(orderId);
+        var order = await _db.Orders.Include(b => b.Book).FirstAsync(o => o.OrderId == orderId);
         order.Rating = new RatingData
         {
             TimeCreation = DateTime.Now,
@@ -96,8 +96,14 @@ public class OrderService : IOrderService
             OrderId = orderId,
             Score = score
         };
-
-        _db.SaveChanges();
+        var book = order.Book;
+        var priorCounts = book.RatingCount;
+        var priorAvg = book.AvgRating;
+        var priorTotalScores = priorAvg * priorCounts;
+        var newTotalScores = priorTotalScores + (int)score;
+        book.RatingCount++;
+        book.AvgRating = newTotalScores / book.RatingCount;
+        await _db.SaveChangesAsync();
     }
 
 }
