@@ -19,6 +19,6 @@ public class BookDetails
     public int Pages { get; init; }
     public byte[]? CoverImage { get; init; }
     public string Language { get; init; }
-    public ICollection<int>? RatingsScore { get; set; }
+    public double? AvgRating { get; init; }
 
 }

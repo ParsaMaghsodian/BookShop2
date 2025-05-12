@@ -1,4 +1,4 @@
-﻿using BookShop2.Application;
+﻿using BookShop2.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookShop2.Web.ViewComponents;

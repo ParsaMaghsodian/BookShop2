@@ -1,4 +1,4 @@
-using BookShop2.Application;
+using BookShop2.Application.Interfaces;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

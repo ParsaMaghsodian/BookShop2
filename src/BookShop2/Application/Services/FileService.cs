@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using BookShop2.Application.Interfaces;
+using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookShop2.Application;
+namespace BookShop2.Application.Services;
 
 public class FileService : IFileService
 {
@@ -21,10 +22,10 @@ public class FileService : IFileService
     public async Task<(byte[] content, string fileName)?> GetFileByNameAsync(string fileName)
     {
         var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Areas", "Files", fileName);
-        if (!System.IO.File.Exists(filePath))
+        if (!File.Exists(filePath))
             return null;
 
-        var content = await System.IO.File.ReadAllBytesAsync(filePath);
+        var content = await File.ReadAllBytesAsync(filePath);
         return (content, fileName);
 
     }
@@ -36,10 +37,10 @@ public class FileService : IFileService
         if (!isAllowed || book.FileName is null)
             return null;
         var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Areas", "Files", book.FileName);
-        if (!System.IO.File.Exists(filePath))
+        if (!File.Exists(filePath))
             return null;
 
-        var content = await System.IO.File.ReadAllBytesAsync(filePath);
+        var content = await File.ReadAllBytesAsync(filePath);
         return (content, book.FileName);
     }
 }

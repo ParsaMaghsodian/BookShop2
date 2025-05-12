@@ -6,6 +6,13 @@
 }
 
 <div class="container my-5">
+
+ <div id="warning-box" class="alert alert-warning alert-dismissible fade show d-none" role="alert">
+    <i class="bi bi-exclamation-triangle-fill"></i>
+    <span id="warning-text"></span>
+    <button type="button" class="btn-close" aria-label="Close"></button>
+</div>
+
     <div class="row">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -28,15 +35,15 @@
             <div><strong>Price:</strong> $@Model.Book.Price</div>
 
             <!-- ⭐ Average Rating Display -->
-            @if (Model.Book.RatingsScore is not null && Model.Book.RatingsScore.Any())
+            @if (Model.Book.AvgRating is not null)
             {
-                var avg = Model.Book.RatingsScore.Average();
+              
                 <div class="mt-3">
                     <strong>Average Rating:</strong>
                     <span class="text-warning fs-4">
                         @for (int i = 1; i <= 5; i++)
                         {
-                            if (i <= Math.Round(avg))
+                            if (i <= Math.Round(Model.Book.AvgRating.Value))
                             {
                                 <span style="font-size: 2rem; color: gold;">&#9733;</span>
                             }
@@ -45,7 +52,7 @@
                                 <span style="font-size: 2rem; color: lightgray;">&#9733;</span>
                             }
                         }
-                        <span class="text-dark fs-6">(@avg.ToString("0.0"))</span>
+                        <span class="text-dark fs-6">(@Model.Book.AvgRating.Value.ToString("0.0"))</span>
                     </span>
                 </div>
             }
@@ -72,3 +79,70 @@
         </div>
     </div>
 </div>
+
+ <!-- Comment Box -->
+    <div class="mt-5">
+        <h4 class="mb-3">Leave a Comment</h4>
+
+        <div class="mb-3">
+            <textarea  class="form-control" id="note" rows="4" placeholder="Write your thoughts about this book..."></textarea>
+        </div>
+
+        <button class="btn btn-success" id="submitComment">
+            <i class="bi bi-chat-left-dots-fill"></i> Submit Comment
+        </button>
+
+    </div>
+
+    <!-- Comments Section -->
+    <div class="mt-5">
+        <h4 class="mb-3">Users Comments</h4>
+        <div id="comments">
+            <!-- Fetched via Ajax -->
+        </div>
+    </div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Load all comments for this book
+            $.get("/api/comments/@Model.Book.Id", function (commentsView) {
+                $("#comments").html(commentsView);
+            });
+
+            // Submit comment
+           $("#submitComment").click(function () {
+                    var note = $("#note").val().trim();
+                     if (!note) 
+                     {
+                    $("#warning-text").text("Can not leave an Empty Comment!");
+                    $("#warning-box").removeClass("d-none");
+                    return;
+                     }
+                    $.post("/api/comments", {
+                        note: note,
+                        bookId: @Model.Book.Id
+                    })
+                    .done(function (lastCommentHtml) {
+                        $("#comments").prepend(lastCommentHtml);
+                        $("#note").val(""); // clear 
+                    })
+                    .fail(function (jqXHR) {
+                    // Show error message from server
+                    $("#warning-text").text(jqXHR.responseText);
+                    $("#warning-box").removeClass("d-none");
+                });
+            });
+
+            // Handle alert close button
+                $("#warning-box .btn-close").click(function() {
+                $("#warning-box").addClass("d-none");
+            });
+        });
+
+    </script>
+}
+
+
+

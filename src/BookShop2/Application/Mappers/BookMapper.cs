@@ -23,7 +23,7 @@ public static class BookMapper
             Price = book.Price,
             Id = book.Id,
             Language = book.Language.ToString(),
-            RatingsScore = book.Ratings.Select(r=>(int)r.Score).ToList(),
+            AvgRating= book.AvgRating,
             FileName = book.FileName
         };
 

@@ -1,4 +1,5 @@
-using BookShop2.Application;
+using BookShop2.Application.Interfaces;
+using BookShop2.Application.Services;
 using BookShop2.Infrastructure;
 using BookShop2.Infrastructure.DataModels;
 using Microsoft.AspNetCore.Http.Features;
@@ -17,6 +18,7 @@ builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IFileService,FileService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false).
     AddDefaultUI()
     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -33,7 +35,7 @@ builder.Services.AddRazorPages()
     });
 
 builder.Services.AddControllers();
-
+builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,6 +1,8 @@
 ﻿using BookShop2.Application.DTO;
+using BookShop2.Application.Interfaces;
 using BookShop2.Infrastructure;
 using BookShop2.Infrastructure.DataModels;
+using BookShop2.Infrastructure.DataModels.Enums;
 using BookShop2.Migrations;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 #nullable disable
 
-namespace BookShop2.Application;
+namespace BookShop2.Application.Services;
 public class OrderService : IOrderService
 {
     private readonly ApplicationDbContext _db;
@@ -88,7 +90,7 @@ public class OrderService : IOrderService
     }
     public async Task AddRatingAsync(int orderId, RatingScore score)
     {
-        var order = await _db.Orders.FindAsync(orderId);
+        var order = await _db.Orders.Include(b => b.Book).FirstAsync(o => o.OrderId == orderId);
         order.Rating = new RatingData
         {
             TimeCreation = DateTime.Now,
@@ -96,8 +98,14 @@ public class OrderService : IOrderService
             OrderId = orderId,
             Score = score
         };
-
-        _db.SaveChanges();
+        var book = order.Book;
+        var priorCounts = book.RatingCount;
+        var priorAvg = book.AvgRating;
+        var priorTotalScores = priorAvg * priorCounts;
+        var newTotalScores = priorTotalScores + (int)score;
+        book.RatingCount++;
+        book.AvgRating = newTotalScores / book.RatingCount;
+        await _db.SaveChangesAsync();
     }
 
 }

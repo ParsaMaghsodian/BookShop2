@@ -1,4 +1,5 @@
 ﻿using BookShop2.Application.DTO;
+using BookShop2.Application.Interfaces;
 using BookShop2.Infrastructure.DataModels;
 using Mapster;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookShop2.Application;
+namespace BookShop2.Application.Services;
 
 public class UserService : IUserService
 {
@@ -22,7 +23,7 @@ public class UserService : IUserService
 
     public async Task<IEnumerable<UserIndex>> GetAllUsersAsync()
     {
-        
+
         return await _userManager.Users.ProjectToType<UserIndex>().ToListAsync();
     }
 

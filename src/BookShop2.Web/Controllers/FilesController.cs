@@ -1,4 +1,4 @@
-﻿using BookShop2.Application;
+﻿using BookShop2.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
