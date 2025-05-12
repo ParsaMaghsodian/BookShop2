@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookShop2.Application;
+namespace BookShop2.Application.Interfaces;
 
 public interface IFileService
 {

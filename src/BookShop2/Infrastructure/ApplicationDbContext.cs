@@ -41,10 +41,12 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         builder.ApplyConfiguration(new BookCategoryConfiguration());
         builder.ApplyConfiguration(new OrderDataConfiguration());
         builder.ApplyConfiguration(new RatingDataConfiguartion());
+        builder.ApplyConfiguration(new CommentDataConfiguration());
         base.OnModelCreating(builder);
     }
 
     public DbSet<BookData> Books { get; set; }
     public DbSet<BookCategory> Categories { get; set; }
     public DbSet<OrderData> Orders { get; set; }
+    public DbSet<CommentData> Comments { get; set; }
 }

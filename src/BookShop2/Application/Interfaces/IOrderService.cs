@@ -1,7 +1,7 @@
 ﻿using BookShop2.Application.DTO;
-using BookShop2.Infrastructure.DataModels;
+using BookShop2.Infrastructure.DataModels.Enums;
 
-namespace BookShop2.Application;
+namespace BookShop2.Application.Interfaces;
 
 public interface IOrderService
 {
@@ -12,5 +12,5 @@ public interface IOrderService
     Task<bool> IsBoughtByThisUser(string userId, int bookId);
     Task<IEnumerable<OrderItems>> GetAllOrdersAsync();
     Task<IEnumerable<UserOrderItem>> GetAllOrdersByUserAsync(string userId);
-     Task AddRatingAsync(int orderId, RatingScore score);
+    Task AddRatingAsync(int orderId, RatingScore score);
 }

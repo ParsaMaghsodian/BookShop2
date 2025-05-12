@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookShop2.Application;
+namespace BookShop2.Application.Interfaces;
 
 public interface IBookService
 {
-    IList<BookItem> GetAllBooks(string term="");
+    IList<BookItem> GetAllBooks(string term = "");
     void AddBook(BookCreateModel item);
     BookDetails GetBookDetails(int id);
     BookEditModel GetEdit(int id);

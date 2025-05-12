@@ -1,6 +1,8 @@
 ﻿using BookShop2.Application.DTO;
+using BookShop2.Application.Interfaces;
 using BookShop2.Infrastructure;
 using BookShop2.Infrastructure.DataModels;
+using BookShop2.Infrastructure.DataModels.Enums;
 using BookShop2.Migrations;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 #nullable disable
 
-namespace BookShop2.Application;
+namespace BookShop2.Application.Services;
 public class OrderService : IOrderService
 {
     private readonly ApplicationDbContext _db;

@@ -1,4 +1,5 @@
 ﻿using BookShop2.Application.DTO;
+using BookShop2.Application.Interfaces;
 using BookShop2.Application.Mappers;
 using BookShop2.Infrastructure;
 using BookShop2.Infrastructure.DataModels;
@@ -10,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookShop2.Application;
+namespace BookShop2.Application.Services;
 
 public class BookService : IBookService
 {

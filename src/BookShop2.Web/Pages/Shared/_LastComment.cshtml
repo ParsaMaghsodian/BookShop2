@@ -1,0 +1,9 @@
+﻿@model CommentOutput
+
+<div class="border p-3 mb-3 rounded shadow-sm bg-light">
+    <div class="d-flex justify-content-between">
+        <strong>@Model.UserName</strong>
+        <small class="text-muted">@Model.TimeCreation.ToString("yyyy-MM-dd ")</small>
+    </div>
+    <p class="mt-2">@Model.Note</p>
+</div>

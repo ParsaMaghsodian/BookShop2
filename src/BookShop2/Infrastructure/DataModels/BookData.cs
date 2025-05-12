@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookShop2.Infrastructure.DataModels.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
