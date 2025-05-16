@@ -1,24 +1,25 @@
 ﻿@page
 @model BookShop2.Web.Pages.Shop.ReviewModel
+@addTagHelper *, BookShop2.Web
 @{
     ViewData["Title"] = "Book Review";
-    @addTagHelper *, BookShop2.Web
+
 }
 
 <div class="container my-5">
 
- <div id="warning-box" class="alert alert-warning alert-dismissible fade show d-none" role="alert">
-    <i class="bi bi-exclamation-triangle-fill"></i>
-    <span id="warning-text"></span>
-    <button type="button" class="btn-close" aria-label="Close"></button>
-</div>
+    <div id="warning-box" class="alert alert-warning alert-dismissible fade show d-none" role="alert">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span id="warning-text"></span>
+        <button type="button" class="btn-close" aria-label="Close"></button>
+    </div>
 
     <div class="row">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <!-- Book Cover Image -->
         <div class="col-md-4">
-               <vc:image-box classboot="img-fluid rounded shadow-lg"
+            <vc:image-box classboot="img-fluid rounded shadow-lg"
                           contents="@Model.Book.CoverImage"
                           alt="Book Cover"
                           style="">
@@ -37,7 +38,7 @@
             <!-- ⭐ Average Rating Display -->
             @if (Model.Book.AvgRating is not null)
             {
-              
+
                 <div class="mt-3">
                     <strong>Average Rating:</strong>
                     <span class="text-warning fs-4">
@@ -80,27 +81,27 @@
     </div>
 </div>
 
- <!-- Comment Box -->
-    <div class="mt-5">
-        <h4 class="mb-3">Leave a Comment</h4>
+<!-- Comment Box -->
+<div class="mt-5">
+    <h4 class="mb-3">Leave a Comment</h4>
 
-        <div class="mb-3">
-            <textarea  class="form-control" id="note" rows="4" placeholder="Write your thoughts about this book..."></textarea>
-        </div>
-
-        <button class="btn btn-success" id="submitComment">
-            <i class="bi bi-chat-left-dots-fill"></i> Submit Comment
-        </button>
-
+    <div class="mb-3">
+        <textarea class="form-control" id="note" rows="4" placeholder="Write your thoughts about this book..."></textarea>
     </div>
 
-    <!-- Comments Section -->
-    <div class="mt-5">
-        <h4 class="mb-3">Users Comments</h4>
-        <div id="comments">
-            <!-- Fetched via Ajax -->
-        </div>
+    <button class="btn btn-success" id="submitComment">
+        <i class="bi bi-chat-left-dots-fill"></i> Submit Comment
+    </button>
+
+</div>
+
+<!-- Comments Section -->
+<div class="mt-5">
+    <h4 class="mb-3">Users Comments</h4>
+    <div id="comments">
+        <!-- Fetched via Ajax -->
     </div>
+</div>
 
 
 @section Scripts {
@@ -114,7 +115,7 @@
             // Submit comment
            $("#submitComment").click(function () {
                     var note = $("#note").val().trim();
-                     if (!note) 
+                     if (!note)
                      {
                     $("#warning-text").text("Can not leave an Empty Comment!");
                     $("#warning-box").removeClass("d-none");
@@ -126,7 +127,7 @@
                     })
                     .done(function (lastCommentHtml) {
                         $("#comments").prepend(lastCommentHtml);
-                        $("#note").val(""); // clear 
+                        $("#note").val(""); // clear
                     })
                     .fail(function (jqXHR) {
                     // Show error message from server

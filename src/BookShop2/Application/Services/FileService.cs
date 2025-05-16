@@ -19,6 +19,23 @@ public class FileService : IFileService
         _bookService = bookService;
         _webHostEnvironment = webHostEnvironment;
     }
+
+    public bool DeleteFile(string filename)
+    {
+        var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Areas", "Files", filename);
+        if (!File.Exists(filePath))
+            return false;
+    
+        File.Delete(filePath);
+        return true;
+    }
+
+    public IEnumerable<FileInfo> GetAllFiles()
+    {
+        var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Areas", "Files");
+        return new DirectoryInfo(filePath).GetFiles(); 
+    }
+
     public async Task<(byte[] content, string fileName)?> GetFileByNameAsync(string fileName)
     {
         var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Areas", "Files", fileName);
