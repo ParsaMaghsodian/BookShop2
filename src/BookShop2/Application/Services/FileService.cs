@@ -1,9 +1,11 @@
 ﻿using BookShop2.Application.Interfaces;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BookShop2.Application.Services;
@@ -20,12 +22,31 @@ public class FileService : IFileService
         _webHostEnvironment = webHostEnvironment;
     }
 
+    public async Task<bool> CreateFileAsync(IFormFile uploadedFile)
+    {
+        var rawFilename = Path.GetFileName(uploadedFile.FileName).Trim();
+        var nameWithoutExtension = Path.GetFileNameWithoutExtension(rawFilename); // gets the file name only
+        var extension = Path.GetExtension(rawFilename); // .pdf for instance
+        // Replace 1 or more spaces with a single hyphen
+        var cleanedName = Regex.Replace(nameWithoutExtension, @"\s+", "-");
+        var finalFilename = cleanedName + extension;
+
+        var path = Path.Combine(_webHostEnvironment.ContentRootPath, "Areas", "Files", finalFilename);
+        if (System.IO.File.Exists(path))
+            return false;
+
+        using var stream = System.IO.File.Create(path);
+        stream.Position = 0;
+        await uploadedFile.CopyToAsync(stream);
+        return true;
+    }
+
     public bool DeleteFile(string filename)
     {
         var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Areas", "Files", filename);
         if (!File.Exists(filePath))
             return false;
-    
+
         File.Delete(filePath);
         return true;
     }
@@ -33,7 +54,7 @@ public class FileService : IFileService
     public IEnumerable<FileInfo> GetAllFiles()
     {
         var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Areas", "Files");
-        return new DirectoryInfo(filePath).GetFiles(); 
+        return new DirectoryInfo(filePath).GetFiles();
     }
 
     public async Task<(byte[] content, string fileName)?> GetFileByNameAsync(string fileName)
