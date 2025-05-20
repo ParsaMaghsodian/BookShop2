@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,4 +12,7 @@ public interface IFileService
 
     Task<(byte[] content, string fileName)?> GetFileByNameAsync(string fileName);  // Admin use
     Task<(byte[] content, string fileName)?> GetUserBookFileAsync(string userId, int bookId); // User use
+    bool DeleteFile(string filename);
+    IEnumerable<FileInfo> GetAllFiles();
+    Task<bool> CreateFileAsync(IFormFile uploadedFile);
 }
