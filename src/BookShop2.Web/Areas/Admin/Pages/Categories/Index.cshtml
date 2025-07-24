@@ -1,0 +1,63 @@
+﻿@page
+@model BookShop2.Web.Areas.Admin.Pages.Categories.IndexModel
+@{
+    ViewData["Title"] = "Categories";
+}
+<partial name="_StatusMessage" model="@TempData["StatusMessage"]" />
+<h2 class="">Book Categories</h2>
+
+<form method="post">
+    <div id="category-container">
+        @if (Model.Categories != null)
+        {
+            for (int i = 0; i < Model.Categories.Count; i++)
+            {
+                <div class="input-group mb-2 category-input">
+                    <input asp-for="Categories[@i].Name" class="form-control" />
+                    <input type="hidden" asp-for="Categories[@i].Id" />
+                    <input type="hidden" asp-for="Categories[@i].OriginalName" />
+                    <input type="hidden" asp-for="Categories[@i].IsChecked" />
+                    <button type="button" class="btn btn-outline-danger btn-sm remove-category-btn"><strong>X</strong></button>
+                </div>
+            }
+        }
+    </div>
+
+    <button id="add-category-btn" class="btn btn-outline-success mb-3" type="button">
+        Add Category
+    </button>
+
+    <div class="d-flex gap-2 mt-3">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a asp-area="Admin" asp-page="/Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        $(function () {
+            let index = @Model.Categories?.Count ?? 0;
+
+            $('#add-category-btn').click(function (e) {
+                e.preventDefault();
+                const newInput = `
+                    <div class="input-group mb-2 category-input">
+                        <input type="text" name="Categories[${index}].Name" class="form-control" />
+                        <input type="hidden" name="Categories[${index}].Id" value="0" />
+                        <input type="hidden" name="Categories[${index}].IsChecked" value="false" />
+                        <button type="button" class="btn btn-outline-danger btn-sm remove-category-btn"><strong>X</strong></button>
+                    </div>
+                `;
+                index++;
+                $('#category-container').append(newInput);
+
+            });
+
+            $(document).on('click', '.remove-category-btn', function () {
+                const container = $(this).closest('.category-input');
+                container.find('input[name$=".IsChecked"]').val('true');
+                container.hide(); // hide visually
+            });
+        });
+    </script>
+}
