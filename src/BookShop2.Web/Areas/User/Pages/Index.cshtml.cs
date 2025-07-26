@@ -1,4 +1,5 @@
 using BookShop2.Application;
+using BookShop2.Web.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,8 +14,7 @@ public class IndexModel : PageModel
     public string UserId { get; set; } // for guid user 
     public void OnGet()
     {
-        UserName = User.Identity!.Name;
-        var userclaim = User.FindFirst(ClaimTypes.NameIdentifier); // gets the user claim from cookie
-        UserId = userclaim!.Value; // get its Guid
+        UserName = User.GetUserName();
+        UserId = User.GetUserId(); // get its Guid
     }
 }

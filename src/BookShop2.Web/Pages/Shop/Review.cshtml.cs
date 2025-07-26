@@ -1,6 +1,7 @@
 using BookShop2.Application.DTO;
 using BookShop2.Application.Interfaces;
 using BookShop2.Web.Areas.Admin.Pages.Books;
+using BookShop2.Web.Common;
 using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,8 +29,7 @@ public class ReviewModel : PageModel
     }
     public async Task<IActionResult> OnPostAsync()
     {
-        var usercliam = User.FindFirst(ClaimTypes.NameIdentifier);
-        var userId = usercliam.Value;
+        var userId = User.GetUserId();
         var result = await _orderService.IsBoughtByThisUser(userId, Book.Id);
         if (!result)
         {

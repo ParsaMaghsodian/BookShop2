@@ -1,5 +1,6 @@
 using BookShop2.Application.DTO;
 using BookShop2.Application.Interfaces;
+using BookShop2.Web.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,9 +18,7 @@ public class IndexModel : PageModel
     public string UserName { get; set; }
     public async Task OnGetAsync()
     {
-        UserName = User.Identity!.Name;
-        var userclaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        var userId = userclaim!.Value;
-        UserOrders = await _orderService.GetAllOrdersByUserAsync(userId);
+        UserName = User.GetUserName();
+        UserOrders = await _orderService.GetAllOrdersByUserAsync(User.GetUserId());
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BookShop2.Application.DTO;
 using BookShop2.Application.Interfaces;
+using BookShop2.Web.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -29,8 +30,7 @@ public class CommentController : Controller
    // [Authorize]
     public async Task<IActionResult> AddCommentAsync(string note, int bookId)
     {
-        var userClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-        var userId = userClaim?.Value;
+        var userId = User.GetUserId();
         if (string.IsNullOrEmpty(note))
         {
             return BadRequest("Can not leave an Empty Comment!");
@@ -46,7 +46,7 @@ public class CommentController : Controller
             BookId = bookId,
             UserId = userId,
             TimeCreation = DateTime.Now,
-            UserName = User.Identity.Name
+            UserName = User.GetUserName()
         });
 
         return PartialView("_LastComment", output);
