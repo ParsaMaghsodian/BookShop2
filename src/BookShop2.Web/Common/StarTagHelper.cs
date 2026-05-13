@@ -15,7 +15,7 @@ public class StarTagHelper : TagHelper
         output.TagName = "div";
         output.Attributes.SetAttribute("class", "mt-3"); // name : value based
         var html = new StringBuilder();
-        if (Avg == 0)
+        if (Avg == null || Avg == 0)
         {
             html.Append("<span class=\"text-muted\">No ratings yet</span>");
         }
@@ -37,6 +37,6 @@ public class StarTagHelper : TagHelper
             html.Append($"<span class='text-dark fs-6'>({Avg.Value.ToString("0.0")})</span>");
             html.Append("</span>");
         }
-       output.Content.SetHtmlContent(html.ToString());
+        output.Content.SetHtmlContent(html.ToString());
     }
 }
