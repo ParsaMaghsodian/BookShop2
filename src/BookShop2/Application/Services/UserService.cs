@@ -21,9 +21,12 @@ public class UserService : IUserService
     }
 
 
-    public async Task<IEnumerable<UserIndex>> GetAllUsersAsync()
+    public async Task<IEnumerable<UserIndex>> GetAllUsersAsync(string? term)
     {
-
+        if (!string.IsNullOrEmpty(term))
+        {
+            return await _userManager.Users.Where(u => u.UserName == term.Trim()).ProjectToType<UserIndex>().ToListAsync();
+        }
         return await _userManager.Users.ProjectToType<UserIndex>().ToListAsync();
     }
 

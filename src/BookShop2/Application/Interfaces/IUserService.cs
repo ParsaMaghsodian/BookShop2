@@ -10,6 +10,6 @@ namespace BookShop2.Application.Interfaces;
 
 public interface IUserService
 {
-    Task<IEnumerable<UserIndex>> GetAllUsersAsync();
+    Task<IEnumerable<UserIndex>> GetAllUsersAsync(string ?term);
     Task<int> GetUserCountAsync();
 }

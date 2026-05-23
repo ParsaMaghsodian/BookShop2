@@ -15,9 +15,11 @@ public class IndexModel : PageModel
     {
         _userService = userService;
     }
+    [BindProperty(SupportsGet = true)]
+    public string? Term { get; set; }
     public IEnumerable<UserIndex> UsersList { get; set; }
     public async Task OnGetAsync()
     {
-        UsersList = await _userService.GetAllUsersAsync();
+        UsersList = await _userService.GetAllUsersAsync(Term);
     }
 }
