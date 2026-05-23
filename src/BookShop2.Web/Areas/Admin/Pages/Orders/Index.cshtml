@@ -4,11 +4,39 @@
     ViewData["Title"] = "Orders";
 }
 
-<div class="container mt-5">
-    <h2 class="text-primary">Orders List</h2>
+<div class="container mt-4">
+    <h2 class="text-primary mb-4">Orders List</h2>
+
+    <form method="get" class="row g-2 mb-4 bg-light p-3 border rounded align-items-end">
+
+        <div class="col-12 col-lg-3">
+            <label class="form-label fw-bold small">Username</label>
+            <input asp-for="UserName" class="form-control" placeholder="Search user..." />
+        </div>
+
+        <div class="col-12 col-lg-3">
+            <label class="form-label fw-bold small">Book Name</label>
+            <input asp-for="BookName" class="form-control" placeholder="Search book..." />
+        </div>
+
+        <div class="col-6 col-lg-2">
+            <label class="form-label fw-bold small">From Date</label>
+            <input asp-for="FromDate" type="date" class="form-control" />
+        </div>
+
+        <div class="col-6 col-lg-2">
+            <label class="form-label fw-bold small">To Date</label>
+            <input asp-for="ToDate" type="date" class="form-control" />
+        </div>
+
+        <div class="col-12 col-lg-2 d-flex gap-2">
+            <button type="submit" class="btn btn-primary w-100">Filter</button>
+            <a asp-page="./Index" class="btn btn-outline-secondary w-100">Clear</a>
+        </div>
+    </form>
 
     <div class="table-responsive">
-        <table class="table table-bordered table-striped mt-3">
+        <table class="table table-hover table-bordered shadow-sm mt-3">
             <thead class="table-primary">
                 <tr>
                     <th>Order ID</th>
@@ -27,7 +55,7 @@
                             <td>@order.OrderId</td>
                             <td>@order.UserUserName</td>
                             <td>@order.BookName</td>
-                            <td>$@order.Amount</td>
+                            <td class="fw-bold">$@order.Amount</td>
                             <td>@order.TimeCreation.ToString("yyyy-MM-dd")</td>
                         </tr>
                     }
@@ -35,7 +63,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="5" class="text-center">No orders available.</td>
+                        <td colspan="5" class="text-center text-muted py-4">No orders matching your criteria.</td>
                     </tr>
                 }
             </tbody>

@@ -12,9 +12,18 @@ public class IndexModel : PageModel
     {
             _orderService = orderService;
     }
-    public IEnumerable<OrderItems> OrdersList { get; set; }
+    public IEnumerable<OrderItems> OrdersList { get; set; } = Enumerable.Empty<OrderItems>();
+    [BindProperty(SupportsGet = true)] 
+    public string? UserName { get; set; }
+    [BindProperty(SupportsGet = true)] 
+    public string? BookName { get; set; }
+
+    [BindProperty(SupportsGet = true)] 
+    public DateTime? FromDate { get; set; }
+    [BindProperty(SupportsGet = true)]
+    public DateTime? ToDate { get; set; }
     public async Task OnGetAsync()
     {
-        OrdersList= await _orderService.GetAllOrdersAsync();
+        OrdersList = await _orderService.GetFilteredOrdersAsync(UserName, FromDate, ToDate, BookName);
     }
 }

@@ -19,6 +19,6 @@ public class IndexModel : PageModel
     public async Task OnGetAsync()
     {
         UserName = User.GetUserName();
-        UserOrders = await _orderService.GetAllOrdersByUserAsync(User.GetUserId());
+        UserOrders = await _orderService.GetAllOrdersByUserIdAsync(User.GetUserId());
     }
 }
