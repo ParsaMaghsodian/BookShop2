@@ -24,8 +24,8 @@ public class BookDataConfiguration : IEntityTypeConfiguration<BookData>
         builder.Property(x => x.Price).IsRequired();
         builder.ToTable(x => x.HasCheckConstraint("CK_BookData_Price", "[Price] >=0 AND [Price]<=1000"));
         builder.ToTable(x => x.HasCheckConstraint("CK_BookData_Pages", "[Pages] >=0 AND [Pages]<=10000"));
-        builder.Property(x=>x.Language).IsRequired();
-        builder.HasOne(x => x.BookCategory).WithMany().HasForeignKey(x=>x.CategoryId).OnDelete(DeleteBehavior.Cascade); 
-        
+        builder.Property(x => x.Language).IsRequired();
+        builder.HasOne(x => x.BookCategory).WithMany().HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Cascade);
+
     }
 }

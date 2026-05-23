@@ -47,7 +47,7 @@ public class BookService : IBookService
         }
         else
         {
-            return _db.Books.Where(b => b.Name.ToLower().StartsWith(term.ToLower()))
+            return _db.Books.Where(b => b.Name.ToLower().Contains(term.ToLower()))
                 .Include(c => c.BookCategory).ProjectToType<BookItem>().ToList();
         }
 

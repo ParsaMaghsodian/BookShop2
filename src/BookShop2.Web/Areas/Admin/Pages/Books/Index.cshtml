@@ -9,6 +9,16 @@
 
 <div class="container mt-5">
     <h2 class="text-primary">Book List</h2>
+
+    <!-- Search Box -->
+    <form method="post" class="mb-3">
+        <div class="input-group">
+            <input type="text" asp-for="@Model.Term" class="form-control" placeholder="Search books by name..." />
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a asp-page="./Index" class="btn btn-secondary">Clear</a>
+        </div>
+    </form>
+
     <table class="table table-bordered table-striped mt-3 ">
         <thead class="table-primary">
             <tr>
