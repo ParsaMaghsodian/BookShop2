@@ -19,7 +19,7 @@ public class OrderDataConfiguration : IEntityTypeConfiguration<OrderData>
         builder.ToTable(x => x.HasCheckConstraint("CK_OrderData_Amount", "[Amount] >= 0 AND [Amount] <= 1000"));
         builder.Property(x => x.State).IsRequired();
         builder.Property(x => x.TimeCreation).HasColumnType("date");
-        builder.HasOne(b => b.Book).WithMany().HasForeignKey(b=>b.BookId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(b => b.Book).WithMany(b=>b.Orders).HasForeignKey(b=>b.BookId).OnDelete(DeleteBehavior.Cascade);
         builder.HasOne(u => u.User).WithMany().HasForeignKey(u=>u.UserId).OnDelete(DeleteBehavior.Cascade);
     }
 }

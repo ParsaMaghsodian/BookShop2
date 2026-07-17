@@ -110,7 +110,7 @@ namespace BookShop2.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -226,7 +226,7 @@ namespace BookShop2.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("BookShop2.Infrastructure.DataModels.OrderData", b =>
