@@ -11,6 +11,10 @@ public interface IOrderService
     public Task<IList<TopSellingBookItem>> GetTopSellingBooksAsync(int count = 3);
     Task<bool> IsBoughtByThisUser(string userId, int bookId);
     Task<IEnumerable<OrderItems>> GetAllOrdersAsync();
-    Task<IEnumerable<UserOrderItem>> GetAllOrdersByUserAsync(string userId);
+    Task<IEnumerable<UserOrderItem>> GetAllOrdersByUserIdAsync(string userId);
+    Task<IEnumerable<OrderItems>> GetFilteredOrdersAsync(string? userName,
+    DateTime? fromDate,
+    DateTime? toDate,
+    string? bookName);
     Task AddRatingAsync(int orderId, RatingScore score);
 }

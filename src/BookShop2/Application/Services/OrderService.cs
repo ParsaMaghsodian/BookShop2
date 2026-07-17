@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 #nullable disable
 
 namespace BookShop2.Application.Services;
+
 public class OrderService : IOrderService
 {
     private readonly ApplicationDbContext _db;
@@ -48,10 +49,41 @@ public class OrderService : IOrderService
         return await _db.Orders.ProjectToType<OrderItems>().ToListAsync();
     }
 
-    public async Task<IEnumerable<UserOrderItem>> GetAllOrdersByUserAsync(string userId)
+    public async Task<IEnumerable<UserOrderItem>> GetAllOrdersByUserIdAsync(string userId)
     {
         return await _db.Orders.Where(o => o.UserId == userId && o.State == OrderState.Confirmed).ProjectToType<UserOrderItem>().ToListAsync();
     }
+    public async Task<IEnumerable<OrderItems>> GetFilteredOrdersAsync(
+    string ? userName,
+    DateTime ? fromDate,
+    DateTime ? toDate,
+    string ? bookName)
+    {
+        var query = _db.Orders.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(userName))
+            query = query.Where(o => o.User.UserName.Contains(userName.Trim()));
+
+        if (!string.IsNullOrWhiteSpace(bookName))
+            query = query.Where(o => o.Book.Name.Contains(bookName.Trim()));
+
+        // Date range (inclusive for both days)
+        if (fromDate.HasValue)
+        {
+            var start = fromDate.Value.Date;
+            query = query.Where(o => o.TimeCreation >= start);
+        }
+
+        if (toDate.HasValue)
+        {
+            // include the whole "toDate" day by using < (toDate + 1 day)
+            var endExclusive = toDate.Value.Date.AddDays(1);
+            query = query.Where(o => o.TimeCreation < endExclusive);
+        }
+
+        return await query.ProjectToType<OrderItems>().ToListAsync();
+    }
+
 
     public OrderDetails GetOrder(int orderId)
     {

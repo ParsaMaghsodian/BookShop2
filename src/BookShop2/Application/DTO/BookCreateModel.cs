@@ -20,4 +20,6 @@ public class BookCreateModel
     public byte[]? CoverImage { get; init; }
     public Language  Language { get; init; }
     public int CategoryId { get; init; }
+    public int RatingCount { get; init; } = 0;
+    public double AvgRating { get; init; } = 0;
 }

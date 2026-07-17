@@ -15,9 +15,16 @@ public class IndexModel : PageModel
     {
         _bookService = bookService;
     }
+    [BindProperty]
+    public string? Term { get; set; }
     public IList<BookItem>? BookList { get; set; }
     public void OnGet()
     {
         BookList = _bookService.GetAllBooks();
+    }
+    public IActionResult OnPost()
+    {
+        BookList = _bookService.GetAllBooks(Term ?? "");
+        return Page();
     }
 }

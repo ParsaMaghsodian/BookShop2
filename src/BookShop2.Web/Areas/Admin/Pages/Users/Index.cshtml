@@ -4,9 +4,19 @@
     ViewData["Title"] = "Users";
 }
 
-<div class="container mt-5">
-    <h2 class="text-primary">Users List</h2>
 
+    <h2 class="text-primary">Users List</h2>
+    <div class="container mt-4">
+        <form method="get" class="row g-2 mb-4 bg-light p-3 border rounded align-items-end">
+            <div class="col-12 col-lg-3">
+                <label class="form-label fw-bold small">UserName</label>
+                <input asp-for="Term" class="form-control" placeholder="Search user..." />
+            </div>
+            <div class="col-12 col-lg-2 d-flex gap-2">
+                <button type="submit" class="btn btn-primary w-100">Search</button>
+                <a asp-page="./Index" class="btn btn-outline-secondary w-100">Clear</a>
+            </div>
+        </form>
     <div class="table-responsive">
         <table class="table table-bordered table-striped mt-3">
             <thead class="table-primary">

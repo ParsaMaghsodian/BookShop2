@@ -13,6 +13,7 @@ public class BookData
 {
     public int Id { get; set; }
     public ICollection<RatingData> Ratings { get; set; }
+    public ICollection<OrderData> Orders { get; set; }
     public required string Name { get; set; }
     public string? FileName { get; set; }
     public string? Description { get; set; }

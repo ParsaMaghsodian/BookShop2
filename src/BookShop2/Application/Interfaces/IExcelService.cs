@@ -1,5 +1,4 @@
 ﻿using BookShop2.Application.DTO;
-using BookShop2.Infrastructure.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookShop2.Application.Interfaces;
 
-public interface IUserService
+public interface IExcelService
 {
-    Task<IEnumerable<UserIndex>> GetAllUsersAsync(string ?term);
-    Task<int> GetUserCountAsync();
+    byte[] CreateOrdersExcel(IEnumerable<OrderItems> orders);
 }
